@@ -1,0 +1,18 @@
+<% include head.ejs %>
+<title>Endless</title>
+<a href=/questions>Questions</a>
+<h1>Jouw matches</h1>
+<div class=list>
+<% for (var index = 0; index < data.length; index++) { %>
+  <a href="/<%= data[index].id %>">
+    <div class=item>
+      <h3>
+        <%= data[index].name %>, <%= data[index].age %>
+      </h3>
+      <h3><%= index + 1 %></h3>
+    </div>
+    <p><%= data[index].match %>% match!</p>
+  </a>
+<% } %>
+</div>
+<% include tail.ejs %>

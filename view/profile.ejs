@@ -1,0 +1,10 @@
+<% include head.ejs %>
+<title><%= data.name %></title>
+<h1><%= data.name %></h1>
+<form action=/profile method=post>
+  min<input min=18 name=min type="range" />
+  max<input max=80 name=max type="range" />
+  <input type="submit" />
+</form>
+<p><a href="/">Back</a></p>
+<% include tail.ejs %>

@@ -1,0 +1,11 @@
+<% include head.ejs %>
+<title><%= data.name %></title>
+<h1><%= data.name %></h1>
+<% if (data.cover) { %>
+<img
+  alt
+  src="/upload/<%= data.cover %>"
+>
+<% } %>
+<p><a href="/">Back</a></p>
+<% include tail.ejs %>
