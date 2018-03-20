@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 var mongo = require('mongodb');
 var ObjectId = require('mongodb').ObjectId;
+const haversine = require('haversine');
 
 require('dotenv').config();
 
@@ -29,9 +30,9 @@ express()
   .get('/', movies)
   .post('/', add)
   .post('/profile', updateProfile)
-  .get('/questions', form)
-  // .get('/:id', match)
+  .get('/questions', question)
   .get('/profile', profile)
+  // .get('/:id', match)
   .delete('/:id', remove)
   .use(notFound)
   .listen(8000);
@@ -43,31 +44,41 @@ function movies(req, res, next) {
     .collection('users')
     .find({ username: 'cees' })
     .toArray(function(err, data) {
+      cees = data[0];
+      var preferences = {
+        gender: cees.prefers,
+        age: { $lte: cees.maxAge, $gte: cees.minAge },
+      };
       db
         .collection('answers')
         .find({ user: data[0]._id })
         .toArray(function(err, data) {
           self = data;
-
           db
             .collection('users')
-            .find({ gender: 'female' })
-            .forEach(function(user) {
-              getUserData(user, self);
+            .find(preferences)
+            .count()
+            .then(function(possibleMatchLength) {
+              db
+                .collection('users')
+                .find(preferences)
+                .forEach(function(user) {
+                  getUserData(user, self, possibleMatchLength);
+                });
             });
         });
     });
 
-  function getUserData(user, self) {
+  function getUserData(user, self, possibleMatchLength) {
     db
       .collection('answers')
       .find({ user: user._id })
       .toArray(function(err, data) {
-        goCompareShit(user, data, self);
+        goCompareShit(user, data, self, possibleMatchLength);
       });
   }
 
-  function goCompareShit(user, data, self) {
+  function goCompareShit(user, data, self, possibleMatchLength) {
     var equalAnswers = self.filter(
       (val, index) => val.answer === data[index].answer
     );
@@ -76,13 +87,17 @@ function movies(req, res, next) {
       id: user._id,
       name: user.name,
       age: user.age,
-      match: Math.round(equalAnswers.length / self.length * 100),
+      match: Math.round(equalAnswers.length / self.length * 100) || 0,
       same: [equalAnswers.length, self.length],
+      distance: Math.floor(haversine(cees.location, user.location)),
     });
 
-    if (matches.length === 99) {
-      console.log('hier');
-      done(matches.sort((x, y) => y.match - x.match));
+    if (matches.length === possibleMatchLength) {
+      done(
+        matches.sort((x, y) => y.match - x.match).filter(match => {
+          return match.distance < Number(cees.maxRange);
+        })
+      );
     }
   }
 
@@ -119,7 +134,6 @@ function profile(req, res, next) {
   );
 
   function done(err, data) {
-    console.log(data);
     if (err) {
       next(err);
     } else {
@@ -129,7 +143,6 @@ function profile(req, res, next) {
 }
 
 function updateProfile(req, res, next) {
-  console.log(req.body);
   db
     .collection('users')
     .find({ username: 'cees' })
@@ -144,6 +157,8 @@ function updateProfile(req, res, next) {
         $set: {
           minAge: Number(req.body.min),
           maxAge: Number(req.body.max),
+          prefers: req.body.prefers,
+          maxRange: req.body.maxRange,
         },
       },
       done
@@ -159,7 +174,7 @@ function updateProfile(req, res, next) {
   }
 }
 
-function form(req, res) {
+function question(req, res) {
   db
     .collection('questions')
     .find()
@@ -177,7 +192,7 @@ function form(req, res) {
     if (err) {
       next(err);
     } else {
-      res.render('add.ejs', { data: questions[answered.length] });
+      res.render('question.ejs', { data: questions[answered.length] });
     }
   }
 }
@@ -191,7 +206,6 @@ function add(req, res, next) {
     });
 
   function addToDB(err, userId) {
-    console.log(req.body, userId);
     db.collection('answers').insertOne(
       {
         user: userId,
