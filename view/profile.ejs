@@ -1,9 +1,39 @@
 <% include head.ejs %>
 <title><%= data.name %></title>
+<% include nav.ejs %>
 <h1><%= data.name %></h1>
 <form action=/profile method=post>
-  min<input min=18 name=min type="range" />
-  max<input max=80 name=max type="range" />
+  <label>My match should be between </label>
+  <select name=min value=<%= data.minAge %>>
+    <% for (var index = 18; index < 80; index++) { %>
+      <% {var selected = (data.minAge === index)} %>
+      <option <%= selected ? selected="selected" : '' %> value=<%= index %>><%= index %></option>
+    <% } %>
+  </select>
+  <label> and </label>
+  <select name=max>
+    <% for (var index = 18; index < 80; index++) { %>
+      <% {var selected = (data.maxAge === index)} %>
+      <option <%= selected ? selected="selected" : '' %> value=<%= index %>><%= index %></option>
+    <% } %>
+  </select>
+  <label> years old and preferably a </label>
+  <select name=prefers>
+    <% {var selected = data.prefers} %>
+    <option <%= selected === 'male' ? selected="selected" : '' %> value="male">Male</option>
+    <option <%= selected === 'female' ? selected="selected" : '' %> value="female">Female</option>
+  </select>
+  <label>who is at max </label>
+   <select name=maxRange>
+     <% {var selected = data.maxRange} %>
+     <option <%= selected === '5' ? selected="selected" : '' %> value=5>5</option>
+     <option <%= selected === '10' ? selected="selected" : '' %> value=10>10</option>
+     <option <%= selected === '20' ? selected="selected" : '' %> value=20>20</option>
+     <option <%= selected === '50' ? selected="selected" : '' %> value=50>50</option>
+     <option <%= selected === '100' ? selected="selected" : '' %> value=100>100</option>
+     <option <%= selected === '150' ? selected="selected" : '' %> value=150>150</option>
+   </select>
+   <label> kilometer away </label>
   <input type="submit" />
 </form>
 <p><a href="/">Back</a></p>

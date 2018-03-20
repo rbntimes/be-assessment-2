@@ -1,5 +1,6 @@
 <% include head.ejs %>
 <title>Add a movie - My movie website</title>
+<% include nav.ejs %>
 <h1><%= data.question %></h1>
 <form action=/ method=post>
   <input name=id style="display: none" value=<%= data._id %>></input>
@@ -12,5 +13,4 @@
     <% } %>
   </div>
 </form>
-<a href=/>Back</a>
 <% include tail.ejs %>
