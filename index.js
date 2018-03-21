@@ -27,7 +27,7 @@ express()
   .use(bodyParser.urlencoded({ extended: true }))
   .set('view engine', 'ejs')
   .set('views', 'view')
-  .get('/', movies)
+  .get('/', matchList)
   .post('/', add)
   .post('/profile', updateProfile)
   .get('/questions', question)
@@ -37,7 +37,7 @@ express()
   .use(notFound)
   .listen(8000);
 
-function movies(req, res, next) {
+function matchList(req, res, next) {
   matches = [];
 
   db
@@ -46,8 +46,21 @@ function movies(req, res, next) {
     .toArray(function(err, data) {
       cees = data[0];
       var preferences = {
+        _id: { $ne: cees._id },
         gender: cees.prefers,
         age: { $lte: cees.maxAge, $gte: cees.minAge },
+        location: {
+          $near: {
+            $geometry: {
+              type: 'Point',
+              coordinates: [
+                cees.location.coordinates[0],
+                cees.location.coordinates[1],
+              ],
+            },
+            $maxDistance: Number(cees.maxRange),
+          },
+        },
       };
       db
         .collection('answers')
@@ -89,15 +102,34 @@ function movies(req, res, next) {
       age: user.age,
       match: Math.round(equalAnswers.length / self.length * 100) || 0,
       same: [equalAnswers.length, self.length],
-      distance: Math.floor(haversine(cees.location, user.location)),
+      distance:
+        Math.floor(
+          haversine(
+            {
+              type: 'Point',
+              geometry: {
+                coordinates: [
+                  cees.location.coordinates[0],
+                  cees.location.coordinates[1],
+                ],
+              },
+            },
+            {
+              type: 'Point',
+              geometry: {
+                coordinates: [
+                  user.location.coordinates[0],
+                  user.location.coordinates[1],
+                ],
+              },
+            },
+            { format: 'geojson' }
+          )
+        ) || 0,
     });
 
     if (matches.length === possibleMatchLength) {
-      done(
-        matches.sort((x, y) => y.match - x.match).filter(match => {
-          return match.distance < Number(cees.maxRange);
-        })
-      );
+      done(matches.sort((x, y) => y.match - x.match));
     }
   }
 

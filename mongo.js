@@ -13,7 +13,7 @@ var locations = randomGeoPoints(
   userRadius,
   userAmount
 );
-var maxRange = ['5', '10', '20', '50', '100', '150'];
+var maxRange = ['5000', '10000', '20000', '50000', '100000', '150000'];
 var questionLength = 0;
 
 // Questions
@@ -85,7 +85,10 @@ function getUserData(data) {
       picture: data.results[index].picture.large,
       registered: data.results[index].registered,
       nationality: data.results[index].nat,
-      location: locations[index],
+      location: {
+        type: 'Point',
+        coordinates: [locations[index].latitude, locations[index].longitude],
+      },
       maxRange: maxRange[Math.floor(Math.random() * maxRange.length)],
     });
   }
@@ -108,6 +111,11 @@ function getUserData(data) {
           fillQuestions(res.ops);
         });
       function fillQuestions(users) {
+        db
+          .db('endless')
+          .collection('users')
+          .createIndex({ location: '2dsphere' });
+
         users.forEach(function(user) {
           db
             .db('endless')
@@ -147,10 +155,7 @@ function getUserData(data) {
               minAge: 18,
               maxAge: 25,
               prefers: 'female',
-              location: {
-                latitude: 52.322125,
-                longitude: 4.956157,
-              },
+              location: { type: 'Point', coordinates: [52.322125, 4.956157] },
               maxRange: maxRange[Math.floor(Math.random() * maxRange.length)],
             })
             .then(db.close());
