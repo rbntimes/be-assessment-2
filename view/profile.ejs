@@ -26,15 +26,14 @@
   <label>who is at max </label>
    <select name=maxRange>
      <% {var selected = data.maxRange} %>
-     <option <%= selected === '5' ? selected="selected" : '' %> value=5>5</option>
-     <option <%= selected === '10' ? selected="selected" : '' %> value=10>10</option>
-     <option <%= selected === '20' ? selected="selected" : '' %> value=20>20</option>
-     <option <%= selected === '50' ? selected="selected" : '' %> value=50>50</option>
-     <option <%= selected === '100' ? selected="selected" : '' %> value=100>100</option>
-     <option <%= selected === '150' ? selected="selected" : '' %> value=150>150</option>
+     <option <%= selected === '5000' ? selected="selected" : '' %> value=5000>5</option>
+     <option <%= selected === '10000' ? selected="selected" : '' %> value=10000>10</option>
+     <option <%= selected === '20000' ? selected="selected" : '' %> value=20000>20</option>
+     <option <%= selected === '50000' ? selected="selected" : '' %> value=50000>50</option>
+     <option <%= selected === '100000' ? selected="selected" : '' %> value=100000>100</option>
+     <option <%= selected === '150000' ? selected="selected" : '' %> value=150000>150</option>
    </select>
    <label> kilometer away </label>
   <input type="submit" />
 </form>
-<p><a href="/">Back</a></p>
 <% include tail.ejs %>
