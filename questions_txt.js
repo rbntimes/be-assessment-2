@@ -1,4 +1,4 @@
-var questions = [
+module.exports = [
   {
     id: 1,
     question: 'Do you think that masturbation is an acceptable practice?',
@@ -218,10 +218,7 @@ var questions = [
     id: 35,
     question:
       'Do you try to draw attention to your body by wearing seductive clothing?',
-    answers: [
-      'Yes',
-      '<a href=/cwcki/Tomgirl_Pictures title=Tomgirl Pictures class=mw-redirect>No</a>',
-    ],
+    answers: ['Yes', 'No'],
   },
   {
     id: 36,
@@ -272,7 +269,7 @@ var questions = [
     id: 44,
     question:
       'As an adult, have you ever been single for more than a year straight?',
-    answers: ['<a href=/cwcki/Love_Quest title=Love Quest>Yes</a>', 'No'],
+    answers: ['Yes', 'No'],
   },
   {
     id: 45,
@@ -356,7 +353,7 @@ var questions = [
     id: 57,
     question:
       'Do wild places such as mountains, rivers and forests call out to you?',
-    answers: ['<a href=/cwcki/A_Hike title=A Hike>Yes.</a>', 'No'],
+    answers: ['Yes.', 'No'],
   },
   {
     id: 58,
@@ -992,10 +989,7 @@ var questions = [
   {
     id: 144,
     question: 'Do you have a problem with racist jokes?',
-    answers: [
-      'Yes',
-      '<a href=/cwcki/Barack_Obama#White_House_gag title=Barack Obama>No</a>',
-    ],
+    answers: ['Yes', 'No'],
   },
   {
     id: 145,
@@ -1011,10 +1005,7 @@ var questions = [
   {
     id: 147,
     question: 'Are you more of a fast or careful talker?',
-    answers: [
-      'Fast',
-      '<a href=/cwcki/Speech_impediment title=Speech impediment>Careful</a>',
-    ],
+    answers: ['Fast', 'Careful'],
   },
   {
     id: 148,
@@ -1801,7 +1792,7 @@ var questions = [
   {
     id: 254,
     question: 'Could you imagine yourself killing someone?',
-    answers: ['Yes', '<a href=/cwcki/Death_threats title=Death threats>No</a>'],
+    answers: ['Yes', 'No'],
   },
   {
     id: 255,
@@ -1831,18 +1822,13 @@ var questions = [
   },
   {
     id: 259,
-    question:
-      'When I go out to eat, I go to <a href=/cwcki/McDonalds title=McDonalds class=mw-redirect>a large chain restaurant</a>:',
+    question: 'When I go out to eat, I go to a large chain restaurant:',
     answers: ['Exclusively', 'Sometimes', 'Once in a while', 'Never'],
   },
   {
     id: 260,
     question: 'Are you physically strong?',
-    answers: [
-      '<a href=/cwcki/I_AM_STRONG title=I AM STRONG>Yes, very</a>',
-      'Average',
-      'No, not really',
-    ],
+    answers: ['Yes, very', 'Average', 'No, not really'],
   },
   {
     id: 261,
@@ -1859,7 +1845,7 @@ var questions = [
     question: 'Does violence ever solve anything?',
     answers: [
       'Yes, everything',
-      '<a href=/cwcki/Death_threats title=Death threats>No, violence solves nothing</a>',
+      'No, violence solves nothing',
       'Most of the time',
       'Almost never, but sometimes',
     ],
@@ -1925,10 +1911,7 @@ var questions = [
     id: 270,
     question:
       "If someone you barely knew asked you how many people you'd had sex with, would you answer?",
-    answers: [
-      '<a href=/cwcki/Honest_Content title=Honest Content>Yes</a>',
-      'No',
-    ],
+    answers: ['Yes', 'No'],
   },
   {
     id: 271,
@@ -1975,12 +1958,7 @@ var questions = [
   {
     id: 277,
     question: 'How often do you have trouble sleeping at night?',
-    answers: [
-      'Always.',
-      '<a href=/cwcki/Biological_clock title=Biological clock>Frequently.</a>',
-      'Rarely.',
-      'Never',
-    ],
+    answers: ['Always.', 'Frequently.', 'Rarely.', 'Never'],
   },
   {
     id: 278,
@@ -2383,7 +2361,7 @@ var questions = [
   {
     id: 336,
     question: 'Are you more horny or more lonely?',
-    answers: ['Horny', '<a href=/cwcki/Love_Quest title=Love Quest>Lonely</a>'],
+    answers: ['Horny', 'Lonely'],
   },
   {
     id: 337,
@@ -2398,11 +2376,7 @@ var questions = [
   {
     id: 338,
     question: 'Do you enjoy gardening?',
-    answers: [
-      'Yes.',
-      '<a href=/cwcki/Chores title=Chores>No.</a>',
-      "I'm not sure",
-    ],
+    answers: ['Yes.', 'No.', "I'm not sure"],
   },
   {
     id: 339,
@@ -2572,10 +2546,7 @@ var questions = [
   {
     id: 364,
     question: 'Is exposure to sexuality damaging to the minds of children?',
-    answers: [
-      '<a href=/cwcki/Chris_and_Censorship title=Chris and Censorship class=mw-redirect>Yes</a>',
-      'No',
-    ],
+    answers: ['Yes', 'No'],
   },
   {
     id: 365,
@@ -2596,9 +2567,7 @@ var questions = [
   {
     id: 367,
     question: 'Do you write poetry?',
-    answers: [
-      '<a href=/cwcki/Chris_and_writing#Chris_as_a_poet_and_lyricist title=Chris and writing>Yes</a><li> No',
-    ],
+    answers: ['Yes', 'No'],
   },
   {
     id: 368,
@@ -2616,7 +2585,7 @@ var questions = [
       'When you are angry or frustrated, do you ever throw, smash, kick, hit inanimate objects (non-living things)?',
     answers: [
       'Yes, frequently',
-      '<a href=/cwcki/Chris_and_anger#Examples_of_Chris.27s_anger title=Chris and anger>Sometimes</a>/li> Used to, but not any more',
+      'Sometimes/li> Used to, but not any more',
       'Never',
     ],
   },
@@ -2624,7 +2593,7 @@ var questions = [
     id: 370,
     question: 'Should prostitution be legal?',
     answers: [
-      '<a href=/cwcki/Chris_and_sex#Prostitution title=Chris and sex>Yes, absolutely</a>',
+      'Yes, absolutely',
       'Yes, only if it were regulated',
       "I don't think so",
       'ABSOLUTELY NOT',
@@ -2650,7 +2619,8 @@ var questions = [
     question: 'Should speech be...',
     answers: [
       'Completely free',
-      '<a href=/cwcki/Chris_and_Censorship title=Chris and Censorship class=mw-redirect>Have censorship</a></li> Be very censored',
+      'Have censorship',
+      'Be very censored',
       'Only say what the dictator wants',
     ],
   },
@@ -2709,10 +2679,7 @@ var questions = [
     id: 382,
     question:
       "If someone asked you, What's the worst thing you've ever done? would you know the answer right away?",
-    answers: [
-      '<a href=/cwcki/Chris_and_remorse title=Chris and remorse>Yes</a>',
-      'No',
-    ],
+    answers: ['Yes', 'No'],
   },
   {
     id: 383,
@@ -2728,7 +2695,7 @@ var questions = [
   {
     id: 384,
     question: 'Are you really into Anime (Japanese Animation) movies?',
-    answers: ['<a href=/cwcki/Anime title=Anime>Yes</a>', 'No'],
+    answers: ['Yes', 'No'],
   },
   {
     id: 385,
@@ -2739,12 +2706,7 @@ var questions = [
   {
     id: 386,
     question: 'How good is your singing voice?',
-    answers: [
-      'Really awesome, actually',
-      '<a href=/cwcki/Chris_and_music title=Chris and music>Very good</a>',
-      'Okay',
-      'Crappy',
-    ],
+    answers: ['Really awesome, actually', 'Very good', 'Okay', 'Crappy'],
   },
   {
     id: 387,
@@ -2805,8 +2767,7 @@ var questions = [
   },
   {
     id: 397,
-    question:
-      'How often do you <a href=/cwcki/Mass_debating title=Mass debating>masturbate</a>?',
+    question: 'How often do you masturbate?',
     answers: [
       'Once a day or more',
       'A few times a week',
@@ -2881,8 +2842,7 @@ var questions = [
   },
   {
     id: 409,
-    question:
-      'How often do you <a href=/cwcki/Twitter title=Twitter>tweet</a>?',
+    question: 'How often do you tweet?',
     answers: ['All the time', 'Sometimes', 'Rarely', 'Never'],
   },
   {
@@ -2906,10 +2866,7 @@ var questions = [
     id: 412,
     question:
       'Have you ever tracked someone down just to apologize for something that you did years before?',
-    answers: [
-      '<a href=/cwcki/Chris_and_remorse title=Chris and remorse>Yes.</a>',
-      'No',
-    ],
+    answers: ['Yes.', 'No'],
   },
   {
     id: 413,
@@ -3052,11 +3009,7 @@ var questions = [
   {
     id: 431,
     question: 'Can you run a mile without stopping?',
-    answers: [
-      'Yes',
-      "<a href=/cwcki/Sonichu%27s_Edge title=Sonichu's Edge>No</a>",
-      'Yes - And More',
-    ],
+    answers: ['Yes', 'No', 'Yes - And More'],
   },
   {
     id: 432,
@@ -3071,12 +3024,7 @@ var questions = [
   {
     id: 433,
     question: 'Which do you own more of?',
-    answers: [
-      'Books.',
-      'Movies.',
-      'Music.',
-      '<a href=/cwcki/Video_games title=Video games>Games.</a>',
-    ],
+    answers: ['Books.', 'Movies.', 'Music.', 'Games.'],
   },
   {
     id: 434,
@@ -3111,10 +3059,7 @@ var questions = [
   {
     id: 438,
     question: 'Do you consider astrology to be a legitimate science?',
-    answers: [
-      '<a href=/cwcki/Naive title=Naive class=mw-redirect>Yes.</a>',
-      'No',
-    ],
+    answers: ['Yes.', 'No'],
   },
   {
     id: 439,
@@ -3149,7 +3094,8 @@ var questions = [
       'Who is worse? A person in a committed relationship who cheats on their partner or a single person who leads someone in a relationship to cheat?',
     answers: [
       'The person who cheats on their partner.',
-      '<a href=/cwcki/Vanessa_Saga title=Vanessa Saga>The single person who leads someone to cheat.</li> They are equally bad.',
+      'The single person who leads someone to cheat.',
+      'They are equally bad.',
       'Neither is bad',
     ],
   },
@@ -3161,7 +3107,7 @@ var questions = [
   {
     id: 445,
     question:
-      'Assume you have a <a href=/cwcki/Homos title=Homos>homosexual</a> friend who is the same gender as you. Would it bother you if they hugged you?',
+      'Assume you have a homosexual friend who is the same gender as you. Would it bother you if they hugged you?',
     answers: [
       'Yes.',
       'No.',
@@ -3188,11 +3134,7 @@ var questions = [
   {
     id: 448,
     question: 'Have you ever been to prison?',
-    answers: [
-      '<a href=/cwcki/28_October_2011 title=28 October 2011>Yes</a>',
-      'No',
-      'Just to visit / I was working',
-    ],
+    answers: ['Yes', 'No', 'Just to visit / I was working'],
   },
   {
     id: 449,
@@ -3329,10 +3271,7 @@ var questions = [
     id: 466,
     question:
       'Could you fall in love with someone you have only talked to online?',
-    answers: [
-      'Yes.',
-      '<a href=/cwcki/Sagas#List_of_Sagas title=Sagas class=mw-redirect>No.</a>',
-    ],
+    answers: ['Yes.', 'No.'],
   },
   {
     id: 467,
@@ -3395,7 +3334,7 @@ var questions = [
   {
     id: 474,
     question:
-      'How would you react if your lover <a href=/cwcki/Mumble_8 title=Mumble 8>called you by the name of their ex</a>?',
+      'How would you react if your lover called you by the name of their ex?',
     answers: [
       "I'd get mad and/or dump him/her.",
       "I'd pretend I didn't hear.",
@@ -3410,8 +3349,7 @@ var questions = [
   },
   {
     id: 476,
-    question:
-      'How important are <a href=/cwcki/Honor_Roll title=Honor Roll class=mw-redirect>academic achievements</a> to you?',
+    question: 'How important are academic achievements to you?',
     answers: ['Very important.', 'Somewhat important.', 'Not important'],
   },
   {
@@ -3575,8 +3513,7 @@ var questions = [
   },
   {
     id: 498,
-    question:
-      'How often do you use <a href=/cwcki/Facebook title=Facebook>Facebook</a>?',
+    question: 'How often do you use Facebook?',
     answers: [
       "I'm a very active user.",
       "I'm a somewhat active user.",
@@ -3588,7 +3525,7 @@ var questions = [
     id: 499,
     question: 'Do you like cats? Would you consider owning a cat as a pet?',
     answers: [
-      '<a href=/cwcki/Chandler_Cats title=Chandler Cats>Yes, I would love (or do own) a cat.</a>',
+      'Yes, I would love (or do own) a cat.',
       "I'm not too into them, but I wouldn't mind one.",
       'No, I dislike cats.',
       "I like them, but I'm allergic",
@@ -3615,26 +3552,19 @@ var questions = [
       'Do you now live in the same city or town as the one which you resided primarily in between the ages of eleven and eighteen?',
     answers: [
       'Yes, I live in that same city now.',
-      'No, I live in <a href=/cwcki/Ruckersville,_VA title=Ruckersville, VA>a completely different pl/a></li> No, but I live in a nearby city (&lt; 1hr by ground)',
+      'No, I live in a completely different place',
+      'No, but I live in a nearby city (&lt; 1hr by ground)',
     ],
   },
   {
     id: 503,
     question: 'Which typically comes first for you?',
-    answers: [
-      '<a href=/cwcki/Monthly_tugboat title=Monthly tugboat>Work</a>',
-      'Play',
-    ],
+    answers: ['Work', 'Play'],
   },
   {
     id: 504,
     question: 'Do you enjoy dark, violent, or disturbing music?',
-    answers: [
-      'Yes',
-      'No',
-      "<a href=/cwcki/Hello,_Juffalo title=Hello, Juffalo>When I'm in the mood.</a>",
-      'Unsure',
-    ],
+    answers: ['Yes', 'No', "When I'm in the mood.", 'Unsure'],
   },
   {
     id: 505,
@@ -3700,12 +3630,7 @@ var questions = [
   {
     id: 513,
     question: 'Which, on you, is closest to perfection?',
-    answers: [
-      '<a href=/cwcki/Slow-in-the-minds title=Slow-in-the-minds>Your mind</a>',
-      '<a href=/cwcki/Obesity title=Obesity>Your body</a>',
-      '<a href=/cwcki/Chris_and_money title=Chris and money>Your wallet</a>',
-      'Your soul',
-    ],
+    answers: ['Your mind', 'Your body', 'Your wallet', 'Your soul'],
   },
   {
     id: 514,
@@ -3992,11 +3917,7 @@ var questions = [
   {
     id: 551,
     question: 'Do you like to be the center of attention?',
-    answers: [
-      'Yes, always',
-      '<a href=/cwcki/Chris_and_ego title=Chris and ego class=mw-redirect>Yes, sometimes</a>',
-      'Not really, no',
-    ],
+    answers: ['Yes, always', 'Yes, sometimes', 'Not really, no'],
   },
   {
     id: 552,
@@ -4465,8 +4386,7 @@ var questions = [
   },
   {
     id: 613,
-    question:
-      'Would you, or did you, go to <a href=/cwcki/EXCLUSIVE_Manchester_High_School_2000_Reunion_Required_NOW title=EXCLUSIVE Manchester High School 2000 Reunion Required NOW>your 10-year high school reunion</a>?',
+    question: 'Would you, or did you, go to your 10-year high school reunion?',
     answers: ['Yes', 'No, but I wanted to', 'No'],
   },
   {
@@ -4680,10 +4600,7 @@ var questions = [
   {
     id: 645,
     question: 'Do you believe in the power of prayer?',
-    answers: [
-      '<a href=/cwcki/Chris_and_religion title=Chris and religion>Yes</a>',
-      'No',
-    ],
+    answers: ['Yes', 'No'],
   },
   {
     id: 646,
@@ -4704,9 +4621,7 @@ var questions = [
   {
     id: 649,
     question: 'Should the death penalty be abolished?',
-    answers: [
-      '<a href=/cwcki/Chris_and_hypocrisy#.22I_would_have_them_ESS-acuted.21E2.80.94_Capital_Punishment title=Chris and hypocrisy>Yes</a></li> No',
-    ],
+    answers: ['Yes', 'No'],
   },
   {
     id: 650,
@@ -4804,7 +4719,8 @@ var questions = [
     question: 'Group sex (with 3 or more people):',
     answers: [
       'I have tried it.',
-      '<a href=/cwcki/File:CWCRockin4Way.jpg title=File:CWCRockin4Way.jpg>It seriously interests me.</li> I have little or no interest',
+      'It seriously interests me.',
+      'I have little or no interest',
     ],
   },
   {
@@ -5083,8 +4999,7 @@ var questions = [
   },
   {
     id: 707,
-    question:
-      'Will you teach your children to believe in <a href=/cwcki/Christmas title=Christmas>Santa</a>?',
+    question: 'Will you teach your children to believe in Santa?',
     answers: ['Yes', 'No'],
   },
   {
@@ -5215,10 +5130,7 @@ var questions = [
     id: 724,
     question:
       'Have you ever randomly followed a stranger because you found them attractive?',
-    answers: [
-      '<a href=/cwcki/The_Tale_Of_The_Crazy_Pacer title=The Tale Of The Crazy Pacer>Yes.</a>',
-      'No',
-    ],
+    answers: ['Yes.', 'No'],
   },
   {
     id: 725,
@@ -5276,7 +5188,7 @@ var questions = [
   {
     id: 733,
     question: 'Should cigarettes be illegal?',
-    answers: ['<a href=/cwcki/Tobacky title=Tobacky>Yes.</a>', 'No'],
+    answers: ['Yes.', 'No'],
   },
   {
     id: 734,
@@ -5418,8 +5330,7 @@ var questions = [
   },
   {
     id: 752,
-    question:
-      'When you were a child, did you have an <a href=/cwcki/Sonichu title=Sonichu>imaginary friend</a>?',
+    question: 'When you were a child, did you have an imaginary friend?',
     answers: ['Yes.', 'No.', "I'm not sure."],
   },
   {
@@ -5455,12 +5366,8 @@ var questions = [
   {
     id: 758,
     question:
-      'Would you consider dating someone who has vocalized a strong negative bias toward <a href=/cwcki/Niggos title=Niggos>a certain race of people</a>?',
-    answers: [
-      '<a href=/cwcki/Chris_and_race title=Chris and race>Yes.</a>',
-      'No.',
-      'It depends on which race',
-    ],
+      'Would you consider dating someone who has vocalized a strong negative bias toward a certain race of people?',
+    answers: ['Yes.', 'No.', 'It depends on which race'],
   },
   {
     id: 759,
@@ -5559,7 +5466,7 @@ var questions = [
   {
     id: 771,
     question: 'Do you think homosexuality is a sin?',
-    answers: ['<a href=/cwcki/Homos title=Homos>Yes</a>', 'No'],
+    answers: ['Yes', 'No'],
   },
   {
     id: 772,
@@ -5657,7 +5564,8 @@ var questions = [
     id: 784,
     question: 'Wearing socks with sandals is:',
     answers: [
-      '<a href=/cwcki/Chris_and_Fashion title=Chris and Fashion class=mw-redirect>Perfectly fine.</li> Utterly wrong.',
+      'Perfectly fine.',
+      'Utterly wrong.',
       'OK sometimes.',
       'Not a subject I have an opinion on',
     ],
@@ -5682,18 +5590,13 @@ var questions = [
   {
     id: 787,
     question: 'How big is your porn collection?',
-    answers: [
-      'Small',
-      'Medium',
-      '<a href=/cwcki/Craigslist#Used_Porn title=Craigslist>LARGE</a>',
-      "I don't have one",
-    ],
+    answers: ['Small', 'Medium', 'LARGE', "I don't have one"],
   },
   {
     id: 788,
     question: 'How do you dispose of your used chewing gum?',
     answers: [
-      '<a href=/cwcki/Semen#Recycling title=Semen>I swallow it.</a>',
+      'I swallow it.',
       'I spit it out or stick it to something.',
       'I wrap it up and/or dispose of it neatly.',
       "I don't use chewing gum",
@@ -5862,7 +5765,7 @@ var questions = [
     id: 811,
     question: 'Do you have a vanity license plate?',
     answers: [
-      '<a href=/cwcki/Son-Chu#Vanity_plate title=Son-Chu>vanity license plate</a>',
+      'vanity license plate',
       'No, absolutely not',
       'No, but I want one',
     ],
@@ -5880,12 +5783,7 @@ var questions = [
   {
     id: 814,
     question: 'Is there at least one nude photo of you on the Net?',
-    answers: [
-      '<a href=/cwcki/Nudes title=Nudes>Yes</a>',
-      'No',
-      "Yes, but my face isn't visible",
-      'Not sure',
-    ],
+    answers: ['Yes', 'No', "Yes, but my face isn't visible", 'Not sure'],
   },
   {
     id: 815,
@@ -5952,7 +5850,7 @@ var questions = [
   {
     id: 824,
     question: 'Do you think bodily fluids are inherently gross?',
-    answers: ['<a href=/cwcki/Fapcup title=Fapcup>Yes</a>', 'No'],
+    answers: ['Yes', 'No'],
   },
   {
     id: 825,
@@ -5962,10 +5860,7 @@ var questions = [
   {
     id: 826,
     question: 'Do you believe that wealth in America is fairly distributed?',
-    answers: [
-      '<a href=/cwcki/Monthly_tugboat title=Monthly tugboat>Yes</a>',
-      'No',
-    ],
+    answers: ['Yes', 'No'],
   },
   {
     id: 827,
@@ -6013,11 +5908,7 @@ var questions = [
   {
     id: 834,
     question: ' The best days of my life are:',
-    answers: [
-      'In my future.',
-      '<a href=/cwcki/Manchester_High_School title=Manchester High School>In my past.</a>',
-      'Right now',
-    ],
+    answers: ['In my future.', 'In my past.', 'Right now'],
   },
   {
     id: 835,
@@ -6074,10 +5965,7 @@ var questions = [
   {
     id: 843,
     question: 'Do you have rape fantasies?',
-    answers: [
-      'Yes',
-      '<a href=/cwcki/ShecameforCWC.JPG#With_Megan title=ShecameforCWC.JPG>No</a>',
-    ],
+    answers: ['Yes', 'No'],
   },
   {
     id: 844,
@@ -6403,7 +6291,8 @@ var questions = [
     id: 888,
     question: 'Do you like dogs?  Would you consider owning a dog as a pet?',
     answers: [
-      "<a href=/cwcki/Clover_and_Snoopy title=Clover and Snoopy>Yes, I would love (or do own) a dog.</li> I'm not too into them, but I wouldn't mind one.",
+      'Yes, I would love (or do own) a dog.',
+      "I'm not too into them, but I wouldn't mind one.",
       'No, I dislike dogs.',
       "I like them, but I'm allergic",
     ],
@@ -6620,12 +6509,7 @@ var questions = [
   {
     id: 919,
     question: 'For which emotion is self-restraint the most crucial?',
-    answers: [
-      '<a href=/cwcki/Chris_and_anger title=Chris and anger>Anger</a>',
-      'Fear',
-      'Lust',
-      'Jealousy',
-    ],
+    answers: ['Anger', 'Fear', 'Lust', 'Jealousy'],
   },
   {
     id: 920,
@@ -6671,12 +6555,7 @@ var questions = [
   {
     id: 925,
     question: 'How are your teeth?',
-    answers: [
-      'Perfect',
-      '<a href=/cwcki/Fangs title=Fangs>Okay</a>',
-      'Kinda Scraggly',
-      'Fucked Up',
-    ],
+    answers: ['Perfect', 'Okay', 'Kinda Scraggly', 'Fucked Up'],
   },
   {
     id: 926,
@@ -6686,10 +6565,7 @@ var questions = [
   {
     id: 927,
     question: 'Is it more important to you that you are tactful, or truthful?',
-    answers: [
-      'Tactful',
-      '<a href=/cwcki/Honest_Content title=Honest Content>Truthful</a>',
-    ],
+    answers: ['Tactful', 'Truthful'],
   },
   {
     id: 928,
@@ -6832,7 +6708,8 @@ var questions = [
     id: 947,
     question: 'Have you ever ridden a horse?',
     answers: [
-      '<a href=/cwcki/File:0031-1-Chris_on_Pony.jpg title=File:0031-1-Chris on Pony.jpg>Yes, aenjoyed it.</a></li> Yes, but I did not like it.',
+      'Yes, enjoyed it.',
+      'Yes, but I did not like it.',
       'No, but I would like to some day.',
       'No, and I do not want to',
     ],
@@ -6866,7 +6743,7 @@ var questions = [
   {
     id: 952,
     question: 'Have you ever worked in a customer service job?',
-    answers: ["<a href=/cwcki/Wendy%27s title=Wendy's>Yes.</a>", 'No'],
+    answers: ['Yes.', 'No'],
   },
   {
     id: 953,
@@ -6893,18 +6770,14 @@ var questions = [
   {
     id: 956,
     question: 'How many hours a day do you prefer to sleep?',
-    answers: [
-      '<a href=/cwcki/Biological_clock title=Biological clock>Around 8 hours</a>',
-      'A lot less than 8 hours',
-      'More than 8 hours',
-    ],
+    answers: ['Around 8 hours', 'A lot less than 8 hours', 'More than 8 hours'],
   },
   {
     id: 957,
     question: 'Do you find British comedies entertaining?',
     answers: [
       "They're all I watch.",
-      '<a href=/cwcki/Monty_Python title=Monty Python>I like them quite a bit!</a>',
+      'I like them quite a bit!',
       "Kind of, but I'd rather watch something else.",
       'Not at all',
     ],
@@ -6999,8 +6872,7 @@ var questions = [
   },
   {
     id: 971,
-    question:
-      "Is <a href=/cwcki/JERKS title=JERKS>a guy who's slept with 100 girls</a> a bad person?",
+    question: "Is a guy who's slept with 100 girls a bad person?",
     answers: ['Yes', 'No'],
   },
   {
@@ -7044,10 +6916,7 @@ var questions = [
   {
     id: 978,
     question: 'Have you ever thrown an object in anger during an argument?',
-    answers: [
-      'Yes.',
-      '<a href=/cwcki/Chris_and_anger#Examples_of_Chris.27s_anger title=Chris and anger>No.</a>',
-    ],
+    answers: ['Yes.', 'No.'],
   },
   {
     id: 979,
@@ -7090,7 +6959,7 @@ var questions = [
   {
     id: 984,
     question:
-      'How would you feel about a significant other <a href=/cwcki/List_of_toys title=List of toys>collecting toys that are generally considered appropriate for children</a>?',
+      'How would you feel about a significant other collecting toys that are generally considered appropriate for children?',
     answers: ['Positive.', 'Negative.', 'Neutral or indifferent.'],
   },
   {
@@ -7124,7 +6993,7 @@ var questions = [
   {
     id: 989,
     question: 'Is art important to you?',
-    answers: ['<a href=/cwcki/Chris_and_art title=Chris and art>Yes</a>', 'No'],
+    answers: ['Yes', 'No'],
   },
   {
     id: 990,
@@ -7140,7 +7009,7 @@ var questions = [
     id: 992,
     question: 'Do you typically speak and write in a clear, precise manner?',
     answers: [
-      '<a href=/cwcki/Chris_and_English title=Chris and English>Yes, almost always.</a>',
+      'Yes, almost always.',
       'Yes, but only for classes/work.',
       'It depends on my mood.',
       'Ha, my language is vague and messy',
@@ -7537,10 +7406,7 @@ var questions = [
   {
     id: 1045,
     question: 'Are you a good liar?',
-    answers: [
-      'Yes',
-      "<a href=/cwcki/List_of_Chris%27s_lies title=List of Chris's lies>No</a>",
-    ],
+    answers: ['Yes', 'No'],
   },
   {
     id: 1046,
@@ -7563,10 +7429,10 @@ var questions = [
     question:
       "Say you're with someone you really care about, and they reveal their deepest, darkest secret. Which of the following would be most likely to scare you away?",
     answers: [
-      '<a href=/cwcki/April_16_Fetish_Vids title=April 16 Fetish Vids>A sexual fetish.</a>',
-      '<a href=/cwcki/Chris_and_anger title=Chris and anger>A bad temper.</a>',
-      '<a href=/cwcki/Autism title=Autism>A mild mental illness.</a>',
-      '<a href=/cwcki/Chris_and_money#Credit_cards title=Chris and money>A history of bad credit.</a>',
+      'A sexual fetish.',
+      'A bad temper.',
+      'A mild mental illness.',
+      'A history of bad credit.',
     ],
   },
   {
@@ -7589,10 +7455,7 @@ var questions = [
   {
     id: 1051,
     question: 'Do you lift weights?',
-    answers: [
-      '<a href=/cwcki/11042009_51_50 title=11042009 51 50>Yes</a>',
-      'No',
-    ],
+    answers: ['Yes', 'No'],
   },
   {
     id: 1052,
@@ -8180,7 +8043,8 @@ var questions = [
     id: 1132,
     question: "What's your opinion of male crossdressers?",
     answers: [
-      '<a href=/cwcki/Tomgirl_Saga title=Tomgirl Saga>I have no problem with them. You go girls!</a><li> I respect them, but they still freak me out.',
+      'I have no problem with them. You go girls!',
+      'I respect them, but they still freak me out.',
       'Whatever they do in private is their business.',
       'I do not approve of them',
     ],
@@ -8399,7 +8263,8 @@ var questions = [
     question:
       'How often in conversation are you likely to use an exact quote from a movie, play, or TV show?',
     answers: [
-      '<a href=/cwcki/Things_Chris_has_ripped_off title=Things Chris has ripped off>Once a day or moa></li> Every few days or so.',
+      'Once a day or so',
+      'Every few days or so.',
       'Once a week or less.',
       'I never do this or I no longer do this',
     ],
@@ -8526,12 +8391,7 @@ var questions = [
   {
     id: 1179,
     question: 'Is being in-style with regards to fashion important to you?',
-    answers: [
-      'Yes, Extremely',
-      '<a href=/cwcki/Chris_and_fashion title=Chris and fashion>Yeah, sometimes</a>',
-      'Not really',
-      'No Way',
-    ],
+    answers: ['Yes, Extremely', 'Yeah, sometimes', 'Not really', 'No Way'],
   },
   {
     id: 1180,
@@ -8558,10 +8418,7 @@ var questions = [
     id: 1183,
     question:
       'Hypothetically, do you think you would be good at being a porn star?',
-    answers: [
-      '<a href=/cwcki/Chris_and_ego title=Chris and ego class=mw-redirect>Yes</a>',
-      'No',
-    ],
+    answers: ['Yes', 'No'],
   },
   {
     id: 1184,
@@ -8577,17 +8434,12 @@ var questions = [
   {
     id: 1186,
     question: 'Can two people fall in love without ever meeting in person?',
-    answers: ['Yes.', '<a href=/cwcki/Blanca_Weiss title=Blanca Weiss>No.</a>'],
+    answers: ['Yes.', 'No.'],
   },
   {
     id: 1187,
     question: 'Where did you graduate in your high school class?',
-    answers: [
-      'Top 5%',
-      'Top 20%',
-      '<a href=/cwcki/Honor_Roll title=Honor Roll class=mw-redirect>Top Half</a>',
-      'Bottom Half',
-    ],
+    answers: ['Top 5%', 'Top 20%', 'Top Half', 'Bottom Half'],
   },
   {
     id: 1188,
@@ -8603,10 +8455,7 @@ var questions = [
   {
     id: 1190,
     question: 'Would you ever record a video of yourself having sex?',
-    answers: [
-      'Yes',
-      "<a href=/cwcki/For_Julie%27s_Eyes_Only title=For Julie's Eyes Only>No</a>",
-    ],
+    answers: ['Yes', 'No'],
   },
   {
     id: 1191,
@@ -8617,10 +8466,7 @@ var questions = [
   {
     id: 1192,
     question: 'Do you more often get angry with yourself or with other people?',
-    answers: [
-      'Myself',
-      '<a href=/cwcki/Chris_and_Anger title=Chris and Anger class=mw-redirect>Others</a>',
-    ],
+    answers: ['Myself', 'Others'],
   },
   {
     id: 1193,
@@ -8665,7 +8511,7 @@ var questions = [
     answers: [
       'I prefer someone close to my own age',
       'I prefer someone older',
-      '<a href=/cwcki/Pedofork title=Pedofork>I prefer someone younger</a>',
+      'I prefer someone younger',
       "Doesn't matter to me",
     ],
   },
@@ -8709,10 +8555,7 @@ var questions = [
   {
     id: 1203,
     question: 'Do you have names planned out for future children?',
-    answers: [
-      '<a href=/cwcki/Crystal_Weston_Chandler_(daughter) title=Crystal Weston Chandler (daughter)>Ya></li> No.',
-      "No, and I'm not planning on any future children",
-    ],
+    answers: ['Yas', 'No.', "No, and I'm not planning on any future children"],
   },
   {
     id: 1204,
@@ -8730,7 +8573,7 @@ var questions = [
     question:
       'Have you ever cosplayed? (Dressed up as a comic/anime character)',
     answers: [
-      '<a href=/cwcki/Chris_and_cosplaying title=Chris and cosplaying>Yes</a>',
+      'Yes',
       "No, and I wouldn't be interested",
       'No, but it sounds cool',
     ],
@@ -8898,7 +8741,7 @@ var questions = [
     id: 1233,
     question:
       'Do you feel there are any circumstances in which a person is obligated to have sex with you?',
-    answers: ['Yes', '<a href=/cwcki/Third_date title=Third date>No</a>'],
+    answers: ['Yes', 'No'],
   },
   {
     id: 1234,
@@ -8923,11 +8766,7 @@ var questions = [
   {
     id: 1237,
     question: 'Would you be willing to go shopping for sex toys?',
-    answers: [
-      '<a href=/cwcki/Sex_toys title=Sex toys>Yes.</a>',
-      'No.',
-      'Online only',
-    ],
+    answers: ['Yes.', 'No.', 'Online only'],
   },
   {
     id: 1238,
@@ -9093,11 +8932,7 @@ var questions = [
   {
     id: 1262,
     question: 'Would you do a striptease for your mate?',
-    answers: [
-      '<a href=/cwcki/Little_Tomboy_Blue title=Little Tomboy Blue>Yes</a>',
-      'No',
-      'Maybe / Unsure',
-    ],
+    answers: ['Yes', 'No', 'Maybe / Unsure'],
   },
   {
     id: 1263,
@@ -9112,8 +8947,7 @@ var questions = [
   },
   {
     id: 1264,
-    question:
-      'Is it ever okay to <a href=/cwcki/Death_threats title=Death threats>kill another human being</a>?',
+    question: 'Is it ever okay to kill another human being?',
     answers: [
       'Yes.',
       'Yes, to save your own life.',
@@ -9127,7 +8961,7 @@ var questions = [
     answers: [
       'Yes, only good dreams.',
       'Yes, only bad dreams.',
-      '<a href=/cwcki/Dreams title=Dreams>Yes, both good and bad dreams.</a>',
+      'Yes, both good and bad dreams.',
       'No',
     ],
   },
@@ -9150,15 +8984,12 @@ var questions = [
   {
     id: 1268,
     question: 'Do you have any credit cards?',
-    answers: [
-      '<a href=/cwcki/Chris_and_money#Credit_cards title=Chris and money>Yes</a>',
-      'No',
-    ],
+    answers: ['Yes', 'No'],
   },
   {
     id: 1269,
     question: 'Do you like horror movies?',
-    answers: ['<a href=/cwcki/Saw title=Saw>Yes</a>', 'No'],
+    answers: ['Yes', 'No'],
   },
   {
     id: 1270,
@@ -9214,11 +9045,7 @@ var questions = [
   {
     id: 1275,
     question: 'What kind of shape are you in?',
-    answers: [
-      'Great',
-      '<a href=/cwcki/Chris_and_health title=Chris and health>Average</a>',
-      'Shitty',
-    ],
+    answers: ['Great', 'Average', 'Shitty'],
   },
   {
     id: 1276,
@@ -9269,11 +9096,7 @@ var questions = [
     id: 1283,
     question:
       "How much does the sound of a person's voice affect their attractiveness to you?",
-    answers: [
-      'A lot',
-      '<a href=/cwcki/BlueSpike#Julie title=BlueSpike>A little</a>',
-      'Not at all',
-    ],
+    answers: ['A lot', 'A little', 'Not at all'],
   },
   {
     id: 1284,
@@ -9417,10 +9240,7 @@ var questions = [
     id: 1304,
     question:
       'Have you ever created a piece of art for a friend, just because you were thinking of them?',
-    answers: [
-      '<a href=/cwcki/ShecameforCWC.JPG title=ShecameforCWC.JPG>Yes.</a>',
-      'No',
-    ],
+    answers: ['Yes.', 'No'],
   },
   {
     id: 1305,
@@ -9431,7 +9251,8 @@ var questions = [
     id: 1306,
     question: 'Do you write creatively (novels, plays, poetry, and so forth)?',
     answers: [
-      '<a href=/cwcki/Chris_and_writing#Chris_as_a_poet_and_lyricist title=Chris and writing>CalShakespeare</a></li> Yes; only for assignments, though',
+      'Call me Shakespeare',
+      'Yes; only for assignments, though',
       'Not really / no',
     ],
   },
@@ -9559,10 +9380,7 @@ var questions = [
   {
     id: 1324,
     question: 'Are you Christian?',
-    answers: [
-      '<a href=/cwcki/CHRIS!!!_CHANDLER!!! title=CHRIS!!! CHANDLER!!!>Yes</a>',
-      'No',
-    ],
+    answers: ['Yes', 'No'],
   },
   {
     id: 1325,
