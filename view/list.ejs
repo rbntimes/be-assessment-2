@@ -4,7 +4,7 @@
 <h1>Jouw matches</h1>
 <div class=list>
 <% for (var index = 0; index < data.length; index++) { %>
-  <a href="/<%= data[index].id %>">
+  <a href="/users/<%= data[index].id %>">
     <div class=item>
       <h3>
         <%= data[index].name %>, <%= data[index].age %>

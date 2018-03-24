@@ -32,8 +32,7 @@ express()
   .post('/profile', updateProfile)
   .get('/questions', question)
   .get('/profile', profile)
-  // .get('/:id', match)
-  .delete('/:id', remove)
+  .get('/users/:id', match)
   .use(notFound)
   .listen(8000);
 
@@ -254,25 +253,6 @@ function add(req, res, next) {
       next(err);
     } else {
       res.redirect('/questions');
-    }
-  }
-}
-
-function remove(req, res, next) {
-  var id = req.params.id;
-
-  db.collection('movies').deleteOne(
-    {
-      _id: new mongo.ObjectID(id),
-    },
-    done
-  );
-
-  function done(err) {
-    if (err) {
-      next(err);
-    } else {
-      res.json({ status: 'ok' });
     }
   }
 }
