@@ -28,6 +28,8 @@ express()
   .set('view engine', 'ejs')
   .set('views', 'view')
   .get('/', matchList)
+  .get('/nojs', matche)
+  .get('/data', matche)
   .post('/', add)
   .post('/profile', updateProfile)
   .get('/questions', question)
@@ -37,8 +39,11 @@ express()
   .listen(8000);
 
 function matchList(req, res, next) {
-  matches = [];
+  res.render('endless.ejs');
+}
 
+function matche(req, res, next) {
+  matches = [];
   db
     .collection('users')
     .find({ username: 'cees' })
@@ -133,7 +138,12 @@ function matchList(req, res, next) {
   }
 
   function done(data) {
-    res.render('list.ejs', { data: data });
+    if (req.route.path === '/nojs') {
+      console.log('hier');
+      res.render('nojs.ejs', { data: data });
+    } else {
+      res.render('list.ejs', { data: data });
+    }
   }
 }
 
