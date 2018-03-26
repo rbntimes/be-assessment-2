@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 var mongo = require('mongodb');
 var ObjectId = require('mongodb').ObjectId;
-const haversine = require('haversine');
+var haversine = require('haversine');
 
 require('dotenv').config();
 
