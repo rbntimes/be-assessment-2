@@ -1,4 +1,8 @@
+<% include head.ejs %>
+<title>Endless</title>
+<% include nav.ejs %>
 <h1>Jouw matches</h1>
+<div class=list>
 <% for (var index = 0; index < data.length; index++) { %>
   <a href="/users/<%= data[index].id %>">
     <div class=item>
@@ -13,3 +17,5 @@
     </p>
   </a>
 <% } %>
+</div>
+<% include tail.ejs %>
