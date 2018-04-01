@@ -83,6 +83,10 @@ a {
   text-decoration: none;
 }
 
+.error {
+  color: red;
+}
+
 h1 {
   text-align: center;
   display: flex;
