@@ -1,0 +1,31 @@
+<% include head.ejs %>
+<title>Register</title>
+<% include nav.ejs %>
+<h1>Register now!</h1>
+<form action=/register method=post>
+  <label>Username: </label><input type=text name=username />
+  <% if (status == 409) { %>
+    <span class="error"><%= error %></span>
+  <% } %>
+  <label>Age: </label>
+  <select name=age>
+    <% for (var index = 18; index < 80; index++) { %>
+      <option value=<%= index %>><%= index %></option>
+    <% } %>
+  </select>
+  <label>Gender: </label>
+  <select name=gender>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+  </select>
+  <label>Password: </label><input type=text name=password />
+  <label>Password (confirm): </label><input type=text name=passwordConf />
+  <% if (status == 422) { %>
+    <span class="error">Passwords need to be identical</span>
+  <% } %>
+  <% if (status == 400) { %>
+    <span class="error">All fields are required</span>
+  <% } %>
+  <input type="submit" value="Register">
+</form>
+<% include tail.ejs %>

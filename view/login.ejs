@@ -1,0 +1,17 @@
+<% include head.ejs %>
+<title>Log in</title>
+<% include nav.ejs %>
+<h1>Log in for personal matches</h1>
+<p>Not a member yet? You're missing out, <a href=/register>click here</a> to see your own personal matches</p>
+<form action=/login method=post>
+  <label>Username: </label><input type=text name=username />
+  <% if (status && status === 404) { %>
+    <span class="error"><%= error %></span>
+  <% } %>
+  <label>Password: </label><input type=text name=password />
+  <% if (status && status === 400 || status === 401) { %>
+    <span class="error"><%= error %></span>
+  <% } %>
+  <input type="submit" value="Sign in">
+</form>
+<% include tail.ejs %>
