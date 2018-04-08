@@ -1,14 +1,24 @@
 <h1>Jouw matches</h1>
+<img src="<%= map %>">
+
 <% for (var index = 0; index < data.length; index++) { %>
-  <a href="/users/<%= data[index].id %>">
-    <div class=item>
+  <a href="/users/<%= data[index].id %>/<%= data[index].match === true ? 'match' : '' %>">
+    <div class="item">
       <h3>
         <%= data[index].name %>, <%= data[index].age %>
       </h3>
-      <h3><%= index + 1 %></h3>
+      <h3><%= index + 1 %>
+        <% if (data[index].match === true) { %>
+          ❤️
+        <% } else { %>
+          <%= data[index].unlocked && data[index].completed === true ? "⭐️" : '' %>
+          <%= !data[index].unlocked && data[index].completed === true ? "✅" : '' %>
+          <%= data[index].awaiting === true ? "✍️" : '' %>
+        <% } %>
+      </h3>
     </div>
     <p class=meta>
-      <span><%= data[index].match %>% match!</span>
+      <span><%= data[index].matchPercentage %>% match!</span>
       <span><%= data[index].distance %> kilometer</span>
     </p>
   </a>

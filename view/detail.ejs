@@ -1,11 +1,38 @@
 <% include head.ejs %>
-<title><%= data.name %></title>
-<h1><%= data.name %></h1>
-<% if (data.cover) { %>
-<img
-  alt
-  src="/upload/<%= data.cover %>"
->
-<% } %>
-<p><a href="/">Back</a></p>
+<title>Matching..</title>
+<% include nav.ejs %>
+
+<div>
+  <% var currentPosition = currentPosition || '' %>
+  <% var currentQuestion = currentQuestion || undefined %>
+  <% var correctlyAnswered = correctlyAnswered || 0 %>
+  <% if (currentQuestion) { %>
+    <img id="gif" data-tag="question" src="" />
+
+    <h1>
+      Question time:
+    </h1>
+    <%= currentPosition + 1 %>/<%= questionLength %>
+  <form action=/ method=post>
+    <h2><%= currentQuestion.question %></h2>
+    <input name=id style="display: none" value=<%= currentQuestion._id %>></input>
+    <input name=question style="display: none" value="<%= currentQuestion.question %>"></input>
+    <div class=inputs style="grid-template-columns: repeat(<%= currentQuestion.answers.length %>, 1fr)">
+      <% for (var index = 0; index < currentQuestion.answers.length; index++) { %>
+        <div class=input>
+          <input type=submit name=answer value="<%= currentQuestion.answers[index] %>" />
+        </div>
+      <% } %>
+    </div>
+  </form>
+  <% } else if (currentPosition === questionLength) { %>
+    <div>
+      <img id="gif" data-tag="waiting" src="" />
+      <h1>That's it</h1>
+      <p>You've answered <%= same %> of the <%= questionLength %> correct, you will have to wait and see if your (potential) match thinks it's enough </p>
+      <a href="/">Go back to your matches</a> / <a href="/questions"> Or answer some more </a>
+    </div>
+  <% } %>
+</div>
+<script src=/gif.js></script>
 <% include tail.ejs %>

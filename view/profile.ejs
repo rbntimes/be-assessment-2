@@ -2,39 +2,60 @@
 <title><%= username %></title>
 <% include nav.ejs %>
 <h1><%= username %></h1>
-<form action=/profile method=post>
-  <label>My match should be between </label>
-  <select name=min value=<%= minAge %>>
-    <% for (var index = 18; index < 80; index++) { %>
-      <% {var selected = (minAge === index)} %>
-      <option <%= selected ? selected="selected" : '' %> value=<%= index %>><%= index %></option>
-    <% } %>
-  </select>
-  <label> and </label>
-  <select name=max>
-    <% for (var index = 18; index < 80; index++) { %>
-      <% {var selected = (maxAge === index)} %>
-      <option <%= selected ? selected="selected" : '' %> value=<%= index %>><%= index %></option>
-    <% } %>
-  </select>
-  <label> years old and preferably a </label>
-  <select name=prefers>
-    <% {var selected = prefers} %>
-    <option <%= selected === 'male' ? selected="selected" : '' %> value="male">Male</option>
-    <option <%= selected === 'female' ? selected="selected" : '' %> value="female">Female</option>
-  </select>
-  <label>who is at max </label>
-   <select name=maxRange>
-     <% {var selected = maxRange} %>
-     <option <%= selected === '5000' ? selected="selected" : '' %> value=5000>5</option>
-     <option <%= selected === '10000' ? selected="selected" : '' %> value=10000>10</option>
-     <option <%= selected === '20000' ? selected="selected" : '' %> value=20000>20</option>
-     <option <%= selected === '50000' ? selected="selected" : '' %> value=50000>50</option>
-     <option <%= selected === '100000' ? selected="selected" : '' %> value=100000>100</option>
-     <option <%= selected === '150000' ? selected="selected" : '' %> value=150000>150</option>
-   </select>
-   <label> kilometer away </label>
-   <input type="submit" />
-   <a href=/logout>Sign out</a>
-</form>
+
+<div>
+  <h2>Your settings </h2>
+  <img
+    src="<%= map %>">
+  <form action=/profile method=post>
+    <label>I'm a </label>
+      <select name=age value=<%= age %>>
+        <% for (var index = 18; index < 80; index++) { %>
+          <% {var selected = (age === index)} %>
+          <option <%= selected ? selected="selected" : '' %> value=<%= index %>><%= index %></option>
+        <% } %>
+    </select>
+    <label> year old </label>
+    <select name=gender>
+      <% {var selected = gender} %>
+      <option <%= selected === 'male' ? selected="selected" : '' %> value="male">Male</option>
+      <option <%= selected === 'female' ? selected="selected" : '' %> value="female">Female</option>
+    </select>
+    <label>My match should be between </label>
+    <select name=min value=<%= minAge %>>
+      <% for (var index = 18; index < 80; index++) { %>
+        <% {var selected = (minAge === index)} %>
+        <option <%= selected ? selected="selected" : '' %> value=<%= index %>><%= index %></option>
+      <% } %>
+    </select>
+    <label> and </label>
+    <select name=max>
+      <% for (var index = 18; index < 80; index++) { %>
+        <% {var selected = (maxAge === index)} %>
+        <option <%= selected ? selected="selected" : '' %> value=<%= index %>><%= index %></option>
+      <% } %>
+    </select>
+    <label> years old and preferably a </label>
+    <select name=prefers>
+      <% {var selected = prefers} %>
+      <option <%= selected === 'male' ? selected="selected" : '' %> value="male">Male</option>
+      <option <%= selected === 'female' ? selected="selected" : '' %> value="female">Female</option>
+    </select>
+    <label>who is at max </label>
+     <select name=maxRange>
+       <% {var selected = maxRange} %>
+       <option <%= selected === '5000' ? selected="selected" : '' %> value=5000>5</option>
+       <option <%= selected === '10000' ? selected="selected" : '' %> value=10000>10</option>
+       <option <%= selected === '20000' ? selected="selected" : '' %> value=20000>20</option>
+       <option <%= selected === '50000' ? selected="selected" : '' %> value=50000>50</option>
+       <option <%= selected === '100000' ? selected="selected" : '' %> value=100000>100</option>
+       <option <%= selected === '150000' ? selected="selected" : '' %> value=150000>150</option>
+     </select>
+     <label> kilometer away </label>
+     <input type="submit" />
+
+   </form>
+</div>
+
+<a href=/logout>Sign out</a>
 <% include tail.ejs %>
