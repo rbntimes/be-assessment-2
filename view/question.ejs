@@ -5,10 +5,10 @@
 <form action=/ method=post>
   <input name=id style="display: none" value=<%= data._id %>></input>
   <input name=question style="display: none" value="<%= data.question %>"></input>
-  <div class=inputs style="grid-template-columns: repeat(<%= data.answer.length %>, 1fr)">
-    <% for (var index = 0; index < data.answer.length; index++) { %>
+  <div class=inputs style="grid-template-columns: repeat(<%= data.answers.length %>, 1fr)">
+    <% for (var index = 0; index < data.answers.length; index++) { %>
       <div class=input>
-        <input type=submit name=answer value="<%= data.answer[index] %>" />
+        <input type=submit name=answer value="<%= data.answers[index] %>" />
       </div>
     <% } %>
   </div>

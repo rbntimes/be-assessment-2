@@ -10,4 +10,7 @@ module.exports = {
     },
     400: 'All fields are required',
   },
+  datafetch: {
+    204: 'I could not find any matches, please widen your preferences 🕵🏻',
+  },
 };

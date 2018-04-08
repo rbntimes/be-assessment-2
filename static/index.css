@@ -45,6 +45,30 @@ input[type='submit'] {
   padding: 20px;
 }
 
+.addQuestion .input {
+  margin: 10px;
+  align-items: center;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  display: flex;
+}
+
+.addQuestion .input label {
+  width: 8em;
+}
+
+input[type='input'] {
+  border: none;
+  cursor: pointer;
+  white-space: normal;
+  background: inherit;
+  font-size: 16px;
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+  border-left: 1px solid lightgrey;
+}
+
 form {
   display: grid;
   align-items: flex-end;
@@ -54,6 +78,10 @@ form {
   display: grid;
   grid-auto-columns: 1fr;
   grid-auto-flow: row;
+}
+
+img {
+  width: 100%;
 }
 
 .list .item {
@@ -85,6 +113,19 @@ a {
 
 .error {
   color: red;
+}
+
+.success {
+  color: green;
+}
+
+input[type='submit'].selected {
+  background: #fcfcfc;
+  border: inherit;
+}
+
+#gif {
+  width: 100%;
 }
 
 h1 {

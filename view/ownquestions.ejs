@@ -1,0 +1,39 @@
+<% include head.ejs %>
+<title><%= user.username %></title>
+<% include nav.ejs %>
+<h1>Your questions</h1>
+
+<div>
+  <% for (var index = 0; index < questions.length; index++) { %>
+    <form action=/ method=post>
+      <h3><%= questions[index].question %></h3>
+      <% {var answer = questions[index].answer} %>
+      <input name=id style="display: none" value=<%= questions[index].questionId %>></input>
+      <input name=question style="display: none" value="<%= questions[index].question %>"></input>
+      <div class=inputs style="grid-template-columns: repeat(<%= questions[index].answers.length %>, 1fr)">
+        <% for (var i = 0; i < questions[index].answers.length; i++) { %>
+          <div class=input>
+            <input class="<%= answer === questions[index].answers[i] ? "success" : '' %>" type=submit name="answer" value="<%= questions[index].answers[i] %>" />
+          </div>
+        <% } %>
+      </div>
+    </form>
+  <% } %>
+</div>
+  <form action=/addQuestion method=post>
+    <h3> Add a new question </h3>
+    <div class="addQuestion">
+    <div class="input"><label> Question* </label><input name="question" type="input" maxlength="150" /></div>
+      <% for (var index = 0; index < 4; index++) { %>
+        <div class="input"><label> Option <%= index > 2 ? index + 1 : index + 1 + '*' %></label><input name="answers[<%= index %>]" type="input" maxlength="50" /></div>
+      <% } %>
+      <div class="inputs">
+        <div class="input"><input type="submit" /></div>
+      </div>
+    </div>
+    <a href=/logout>Sign out</a>
+  </form>
+
+<script src=/profile.js></script>
+
+<% include tail.ejs %>

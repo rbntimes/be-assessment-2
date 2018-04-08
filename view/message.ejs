@@ -1,0 +1,31 @@
+<% include head.ejs %>
+<link rel=stylesheet href=/chat.css>
+<title><%= user.username %></title>
+<% include nav.ejs %>
+
+<ul id="messages">
+  <% for (var i = 0; i < chat.length; i++) { %>
+    <li id=<%= i %> class="<%= chat[i].from.toString() === self.toString() ? "send" : "received" %>"><%= chat[i].message %></li>
+  <% } %>
+</ul>
+
+<form id=chat action="/users/<%= user._id %>/chat" method=post>
+  <input id="message" name="message" autocomplete="off" /><button>Send</button>
+</form>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/chat.js"></script>
+<script>
+var socket = io();
+var id = '<%- self %>';
+
+socket.on(id, function({ message, from }) {
+  var list = document.getElementById('messages');
+  var item = document.createElement('li');
+  item.className = from === id ? 'send' : 'received';
+  item.innerHTML = message;
+  list.appendChild(item);
+  list.lastChild.scrollIntoView(true);
+});
+</script>
+<% include tail.ejs %>

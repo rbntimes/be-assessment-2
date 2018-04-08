@@ -22,8 +22,11 @@ module.exports = function(user, cb) {
           },
           prefers: 'female',
           maxRange: '100000',
+          age: 20,
+          gender: 'male',
           minAge: 18,
           maxAge: 50,
+          questions: [],
         };
         klaar(user);
       });

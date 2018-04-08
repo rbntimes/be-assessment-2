@@ -1,6 +1,11 @@
 /* eslint-disable semi */
 
+const { URL } = require('url');
+
 const express = require('express');
+const app = require('express')();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 const mongo = require('mongodb');
 const ObjectId = require('mongodb').ObjectId;
@@ -10,11 +15,16 @@ const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
-
+const min = require('lodash/fp/min');
+const { values, merge, keyBy } = require('lodash');
 require('dotenv').config();
 
-const { authentication } = require('./utils/error');
+const getUserQuestions = require('./utils/getUserQuestions');
+const getUserAnswers = require('./utils/getUserAnswers');
+const { authentication, datafetch } = require('./utils/error');
 const createUser = require('./utils/createUser');
+const compareAnswers = require('./utils/compareAnswers');
+const drawGoogleMaps = require('./utils/google-static-maps');
 
 let db = null;
 const url = 'mongodb://' + process.env.DB_HOST + ':' + process.env.DB_PORT;
@@ -61,18 +71,19 @@ passport.deserializeUser(function(id, cb) {
     .findOne({ _id: ObjectId(id) })
     .then(function(user) {
       if (!user) {
-        return cb('not found');
+        return cb(null, false);
       }
       cb(null, user);
     });
 });
 
-express()
+app
   .use(express.static('static'))
   .use(bodyParser.urlencoded({ extended: true }))
   .use(require('morgan')('combined'))
   .use(require('cookie-parser')())
   .use(require('body-parser').urlencoded({ extended: true }))
+  .use(require('body-parser').json())
   .use(
     session({
       secret: process.env.MY_MOST_BELOVED_SECRET,
@@ -87,13 +98,15 @@ express()
   .use(passport.session())
   .set('view engine', 'ejs')
   .set('views', 'view')
-  .get('/', matchList)
-  .get('/nojs', matche)
-  .get('/data', matche)
+  .get('/', endless)
+  .get('/nojs', getList)
+  .get('/data', getList)
   .post('/', add)
   .post('/profile', updateProfile)
+  .post('/addQuestion', addQuestion)
   .get('/questions', question)
   .get('/profile', profile)
+  .get('/ownquestions', ownquestions)
   .get('/register', register)
   .get('/logout', function(req, res) {
     req.session.destroy(function(err) {
@@ -175,18 +188,39 @@ express()
       });
   })
   .get('/users/:id', match)
-  .use(notFound)
-  .listen(8000);
+  .get('/users/:id/questions', matchQuestions)
+  .post('/users/:id/chat', chat)
+  .get('/users/:id/match', message)
+  .use(notFound);
 
-function matchList(req, res, next) {
+io.on('connection', function(socket) {});
+
+http.listen(3000, function() {});
+
+function endless(req, res, next) {
   var user = req.user;
 
   res.render('endless.ejs', { user: user });
 }
 
-function matche(req, res, next) {
+function getList(req, res, next) {
   if (req.user) {
-    const { _id, prefers, maxAge, minAge, location, maxRange } = req.user;
+    const {
+      _id,
+      prefers,
+      maxAge,
+      minAge,
+      location,
+      maxRange,
+      questions = [],
+    } = req.user;
+
+    var map = drawGoogleMaps(
+      req.user.location.coordinates[0],
+      req.user.location.coordinates[1],
+      req.user.maxRange,
+      process.env.GOOGLE_MAPS_KEY
+    );
 
     matches = [];
     var preferences = {
@@ -203,81 +237,123 @@ function matche(req, res, next) {
         },
       },
     };
-    db
-      .collection('answers')
-      .find({ user: _id })
-      .toArray(function(err, data) {
-        self = data;
 
-        db
-          .collection('users')
-          .find(preferences)
-          .count()
-          .then(function(possibleMatchLength) {
+    getUserAnswers(db, ObjectId(_id), function(ownAnswers) {
+      db
+        .collection('users')
+        .find(preferences)
+        .count()
+        .then(function(possibleMatchLength) {
+          if (possibleMatchLength === 0) {
+            var code = 204;
+            res.render('nomatches.ejs', {
+              error: datafetch[code],
+              status: code,
+            });
+          } else {
             db
               .collection('users')
               .find(preferences)
               .forEach(function(user) {
-                getUserData(user, self, possibleMatchLength);
+                getUserAnswers(db, ObjectId(user._id), function(userAnswers) {
+                  goCompareThings(
+                    user,
+                    userAnswers,
+                    ownAnswers,
+                    possibleMatchLength
+                  );
+                });
               });
-          });
-      });
-
-    function getUserData(user, self, possibleMatchLength) {
-      db
-        .collection('answers')
-        .find({ user: user._id })
-        .toArray(function(err, data) {
-          goCompareShit(user, data, self, possibleMatchLength);
+          }
         });
-    }
+    });
 
-    function goCompareShit(user, data, self, possibleMatchLength) {
-      var equalAnswers = self.filter(
-        (val, index) => val.answer === data[index].answer
-      );
-      matches.push({
-        id: user._id,
-        name: user.name,
-        age: user.age,
-        match: Math.round(equalAnswers.length / self.length * 100) || 0,
-        same: [equalAnswers.length, self.length],
-        distance:
-          Math.floor(
-            haversine(
-              {
-                type: 'Point',
-                geometry: {
-                  coordinates: [
-                    location.coordinates[0],
-                    location.coordinates[1],
-                  ],
-                },
-              },
-              {
-                type: 'Point',
-                geometry: {
-                  coordinates: [
-                    user.location.coordinates[0],
-                    user.location.coordinates[1],
-                  ],
-                },
-              },
-              { format: 'geojson' }
-            )
-          ) || 0,
+    function goCompareThings(
+      user,
+      userAnswers,
+      ownAnswers,
+      possibleMatchLength
+    ) {
+      getUserQuestions(db, user._id, function(matchesQuestions) {
+        compareAnswers(
+          ownAnswers,
+          userAnswers,
+          matchesQuestions,
+          questions,
+          function(result) {
+            match = result;
+
+            matches.push({
+              id: user._id,
+              name: user.username,
+              age: user.age,
+              matchPercentage:
+                Math.round(match.matching / ownAnswers.length * 100) || 0,
+              same: [match.matching, ownAnswers.length],
+              location: user.location.coordinates,
+              match:
+                match.ownQuestionsAnswered === questions.length &&
+                match.matchingOwnQuestions / questions.length * 100 >= 50 &&
+                match.matchingMatchesQuestions /
+                  match.matchQuestionsAnswered *
+                  100 >=
+                  50,
+              ownQuestionsAnswered:
+                match.ownQuestionsAnswered > 0 && match.ownQuestionsAnswered,
+              matchingOwnQuestions:
+                match.matchingOwnQuestions > 0 && match.matchingOwnQuestions,
+              awaiting:
+                match.ownQuestionsAnswered === questions.length &&
+                match.matchingOwnQuestions / questions.length * 100 >= 50,
+              completed:
+                match.matchQuestions.length > 0 &&
+                match.matchQuestions.length === match.matchQuestionsAnswered,
+              unlocked:
+                match.matchingMatchesQuestions /
+                  match.matchQuestionsAnswered *
+                  100 >=
+                50,
+              distance:
+                Math.floor(
+                  haversine(
+                    {
+                      type: 'Point',
+                      geometry: {
+                        coordinates: [
+                          location.coordinates[0],
+                          location.coordinates[1],
+                        ],
+                      },
+                    },
+                    {
+                      type: 'Point',
+                      geometry: {
+                        coordinates: [
+                          user.location.coordinates[0],
+                          user.location.coordinates[1],
+                        ],
+                      },
+                    },
+                    { format: 'geojson' }
+                  )
+                ) || 0,
+            });
+
+            if (matches.length === possibleMatchLength) {
+              done(
+                matches.sort((x, y) => y.matchPercentage - x.matchPercentage)
+              );
+            }
+          }
+        );
       });
-
-      if (matches.length === possibleMatchLength) {
-        done(matches.sort((x, y) => y.match - x.match));
-      }
     }
 
     function done(data) {
       if (req.route.path === '/nojs') {
         res.render('nojs.ejs', { data: data });
       } else {
-        res.render('list.ejs', { data: data });
+        res.render('list.ejs', { data: data, map });
       }
     }
   } else {
@@ -288,19 +364,94 @@ function matche(req, res, next) {
 function match(req, res, next) {
   var id = req.params.id;
 
-  db.collection('users').findOne(
-    {
-      _id: ObjectId(id),
-    },
-    done
-  );
+  db.collection('users').findOne({ _id: ObjectId(id) }, done);
 
-  function done(err, data) {
-    if (err) {
-      next(err);
-    } else {
-      res.render('detail.ejs', { data: data });
-    }
+  function done(err, user) {
+    Object.assign(user, { questions: user.questions || [] });
+    res.render('match.ejs', user);
+  }
+}
+
+function message(req, res, next) {
+  var id = req.params.id;
+  var ownId = req.user._id;
+  db.collection('users').findOne({ _id: ObjectId(id) }, getChat);
+  function getChat(err, user) {
+    db
+      .collection('chats')
+      .find({
+        $or: [
+          { from: ObjectId(id), to: ObjectId(ownId) },
+          { to: ObjectId(id), from: ObjectId(ownId) },
+        ],
+      })
+      .toArray(function(err, chat) {
+        done(user, chat);
+      });
+  }
+
+  function done(user, chat) {
+    res.render('message.ejs', { user, self: ownId, chat });
+  }
+}
+
+function chat(req, res, next) {
+  var id = req.params.id;
+  const { _id } = req.user;
+
+  db
+    .collection('chats')
+    .insertOne({
+      from: ObjectId(_id),
+      to: ObjectId(id),
+      message: req.body.message,
+    })
+    .then(function() {
+      io.emit(id, { message: req.body.message, from: _id });
+      io.emit(_id, { message: req.body.message, from: _id });
+
+      res.status(201).redirect('back');
+    });
+}
+
+function matchQuestions(req, res, next) {
+  var id = req.params.id;
+  const { _id, questions } = req.user;
+
+  getUserAnswers(db, ObjectId(id), function(matchAnswers) {
+    getUserAnswers(db, ObjectId(_id), function(ownAnswers) {
+      getUserQuestions(db, ObjectId(id), function(matchesQuestions) {
+        done(ownAnswers, matchAnswers, matchesQuestions);
+      });
+    });
+  });
+
+  function done(ownAnswers, matchesAnswers, matchesQuestions = []) {
+    let results = [];
+    compareAnswers(
+      ownAnswers,
+      matchesAnswers,
+      matchesQuestions,
+      questions,
+      function(results) {
+        if (results.matchQuestionsAnswered !== results.matchQuestions.length) {
+          res.render('detail.ejs', {
+            user: match,
+            questions: results,
+            currentQuestion:
+              results.matchQuestions[results.matchQuestionsAnswered],
+            currentPosition: results.matchQuestionsAnswered,
+            questionLength: results.matchQuestions.length,
+          });
+        } else {
+          res.render('detail.ejs', {
+            same: results.matchingMatchesQuestions,
+            currentPosition: results.matchQuestionsAnswered,
+            questionLength: results.matchQuestions.length,
+          });
+        }
+      }
+    );
   }
 }
 
@@ -313,12 +464,62 @@ function register(req, res, next) {
 }
 
 function profile(req, res, next) {
-  const user = req.user;
-
-  if (user) {
+  if (req.user) {
+    let user = Object.assign(
+      {
+        map: drawGoogleMaps(
+          req.user.location.coordinates[0],
+          req.user.location.coordinates[1],
+          req.user.maxRange,
+          process.env.GOOGLE_MAPS_KEY
+        ),
+      },
+      req.user
+    );
     res.render('profile.ejs', user);
   } else {
-    res.render('login.ejs', { status: 200 });
+    res.render('login.ejs', { status: 401, error: '' });
+  }
+}
+
+function ownquestions(req, res, next) {
+  const { _id, questions = [] } = req.user;
+  const userQuestions = questions.map(q => ObjectId(q._id));
+
+  let answers = [];
+  if (_id) {
+    db
+      .collection('questions')
+      .find({ user: ObjectId(_id) })
+      .toArray(function(err, questions) {
+        getAnswers(questions);
+      });
+
+    function getAnswers(questions) {
+      db
+        .collection('answers')
+        .find({
+          user: ObjectId(_id),
+          questionId: {
+            $in: userQuestions,
+          },
+        })
+        .toArray(function(err, answers) {
+          done(questions, answers);
+        });
+    }
+
+    function done(questions, answers) {
+      // https://stackoverflow.com/questions/39246101/deep-merge-using-lodash
+      let result = values(
+        merge(keyBy(questions, '_id'), keyBy(answers, 'questionId'))
+      );
+      result.map(r => (r['questionId'] = r.questionId || r._id));
+
+      res.render('ownquestions.ejs', { user: req.user, questions: result });
+    }
+  } else {
+    res.render('login.ejs', { status: 401 });
   }
 }
 
@@ -326,6 +527,8 @@ function updateProfile(req, res, next) {
   const {
     min = req.user.min,
     max = req.user.max,
+    age = req.user.age,
+    gender = req.user.gender,
     prefers = req.user.prefers,
     maxRange = req.user.maxRange,
   } = req.body;
@@ -338,6 +541,8 @@ function updateProfile(req, res, next) {
         maxAge: Number(max),
         prefers: prefers,
         maxRange: maxRange,
+        age: Number(age),
+        gender: gender,
       },
     },
     done
@@ -352,18 +557,60 @@ function updateProfile(req, res, next) {
   }
 }
 
+function addQuestion(req, res, next) {
+  const {
+    questions = req.user.questions || [],
+    question = '',
+    answers = [],
+  } = req.body;
+
+  if (question && answers) {
+    if (answers.length < 2) {
+      res.status(400);
+    } else {
+      db
+        .collection('questions')
+        .insertOne({
+          question,
+          answers: answers.filter(String),
+          user: ObjectId(req.user._id),
+        })
+        .then(function({ ops }) {
+          questions.push(...ops);
+
+          db.collection('users').updateOne(
+            { _id: req.user._id },
+            {
+              $set: {
+                questions,
+              },
+            },
+            done
+          );
+        });
+    }
+  }
+
+  function done(err, data) {
+    if (err) {
+      next(err);
+    } else {
+      res.status(200).redirect('/ownquestions');
+    }
+  }
+}
+
 function question(req, res) {
   const { _id } = req.user;
   db
     .collection('questions')
     .find()
-    .toArray(function(err, data) {
-      questions = data;
+    .toArray(function(err, questions) {
       db
         .collection('answers')
         .find({ user: ObjectId(_id) })
-        .toArray(function(err, data) {
-          done(err, questions, data);
+        .toArray(function(err, answered) {
+          done(err, questions, answered);
         });
     });
 
@@ -378,14 +625,22 @@ function question(req, res) {
 
 function add(req, res, next) {
   const { _id } = req.user;
+  const path = new URL(req.header('referrer')).pathname;
 
-  db.collection('answers').insertOne(
+  const { id, question, answer } = req.body;
+
+  db.collection('answers').findOneAndUpdate(
     {
-      user: _id,
-      question: ObjectId(req.body.id),
-      q: req.body.question,
-      answer: req.body.answer,
+      user: ObjectId(_id),
+      questionId: ObjectId(id),
     },
+    {
+      user: ObjectId(_id),
+      questionId: ObjectId(id),
+      question: question,
+      answer: answer,
+    },
+    { upsert: true },
     done
   );
 
@@ -393,7 +648,7 @@ function add(req, res, next) {
     if (err) {
       next(err);
     } else {
-      res.redirect('/questions');
+      res.status(200).redirect(path);
     }
   }
 }
