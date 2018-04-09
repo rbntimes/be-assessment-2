@@ -1,20 +1,9 @@
-const {
-  values,
-  merge,
-  keyBy,
-  differenceWith,
-  isEqual,
-  isEmpty,
-  _,
-  chain,
-  flatten,
-  find,
-} = require('lodash');
+const { _, find } = require('lodash');
 
 const ObjectId = require('mongodb').ObjectId;
 
 module.exports = function(own, match, matchesQuestions, questions, cb) {
-  let answers = chain([...own, ...match, ...matchesQuestions])
+  let answers = _.chain([...own, ...match, ...matchesQuestions])
     .groupBy('questionId')
     .toPairs()
     .map(x => x[1])
