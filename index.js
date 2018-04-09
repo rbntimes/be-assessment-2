@@ -17,6 +17,7 @@ const Strategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const min = require('lodash/fp/min');
 const { values, merge, keyBy } = require('lodash');
+const moment = require('moment');
 require('dotenv').config();
 
 const getUserQuestions = require('./utils/getUserQuestions');
@@ -302,9 +303,6 @@ function getList(req, res, next) {
                 match.ownQuestionsAnswered > 0 && match.ownQuestionsAnswered,
               matchingOwnQuestions:
                 match.matchingOwnQuestions > 0 && match.matchingOwnQuestions,
-              awaiting:
-                match.ownQuestionsAnswered === questions.length &&
-                match.matchingOwnQuestions / questions.length * 100 >= 50,
               completed:
                 match.matchQuestions.length > 0 &&
                 match.matchQuestions.length === match.matchQuestionsAnswered,
@@ -351,7 +349,7 @@ function getList(req, res, next) {
 
     function done(data) {
       if (req.route.path === '/nojs') {
-        res.render('nojs.ejs', { data: data });
+        res.render('nojs.ejs', { data: data, map });
       } else {
         res.render('list.ejs', { data: data, map });
       }
@@ -370,6 +368,25 @@ function match(req, res, next) {
     Object.assign(user, { questions: user.questions || [] });
     res.render('match.ejs', user);
   }
+
+  // var id = req.params.id;
+  // db.collection('users').findOne({ _id: ObjectId(id) }, done);
+  //
+  // function done(err, user) {
+  //   getUserAnswers(db, ObjectId(id), function(userAnswers) {
+  //     user.questions.forEach(q => {
+  //       answered = find(userAnswers, a => {
+  //         return a.questionId.toString() === q._id.toString();
+  //       });
+  //       console.log(user.questions, answered);
+  //       Object.assign(user, {
+  //         questions: user.questions || [],
+  //         answered: [answered] || [],
+  //       });
+  //       res.render('match.ejs', user);
+  //     });
+  //   });
+  // }
 }
 
 function message(req, res, next) {
@@ -386,18 +403,28 @@ function message(req, res, next) {
         ],
       })
       .toArray(function(err, chat) {
+        chat.forEach((m, index) => {
+          chat[index]['send'] = moment(m.send)
+            .startOf('minute')
+            .fromNow();
+        });
         done(user, chat);
       });
   }
 
   function done(user, chat) {
-    res.render('message.ejs', { user, self: ownId, chat });
+    res.render('message.ejs', {
+      user,
+      self: req.user,
+      chat,
+    });
   }
 }
 
 function chat(req, res, next) {
   var id = req.params.id;
   const { _id } = req.user;
+  const date = new Date().toJSON();
 
   db
     .collection('chats')
@@ -405,10 +432,23 @@ function chat(req, res, next) {
       from: ObjectId(_id),
       to: ObjectId(id),
       message: req.body.message,
+      send: date,
     })
     .then(function() {
-      io.emit(id, { message: req.body.message, from: _id });
-      io.emit(_id, { message: req.body.message, from: _id });
+      io.emit(id, {
+        message: req.body.message,
+        send: moment(date)
+          .startOf('minute')
+          .fromNow(),
+        from: _id,
+      });
+      io.emit(_id, {
+        message: req.body.message,
+        send: moment(date)
+          .startOf('minute')
+          .fromNow(),
+        from: _id,
+      });
 
       res.status(201).redirect('back');
     });
