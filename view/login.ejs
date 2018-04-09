@@ -8,7 +8,7 @@
   <% if (status && status === 404) { %>
     <span class="error"><%= error %></span>
   <% } %>
-  <label>Password: </label><input type=text name=password />
+  <label>Password: </label><input type=password name=password />
   <% if (status && status === 400 || status === 401) { %>
     <span class="error"><%= error %></span>
   <% } %>

@@ -5,7 +5,12 @@
 
 <ul id="messages">
   <% for (var i = 0; i < chat.length; i++) { %>
-    <li id=<%= i %> class="<%= chat[i].from.toString() === self.toString() ? "send" : "received" %>"><%= chat[i].message %></li>
+    <li id=<%= i %> class="<%= chat[i].from.toString() === self._id.toString() ? "send" : "received" %>">
+      <div>
+        <%= chat[i].message %>
+        <span class="time"><%= chat[i].send %></span>
+      </div>
+    </li>
   <% } %>
 </ul>
 
@@ -17,13 +22,20 @@
 <script src="/chat.js"></script>
 <script>
 var socket = io();
-var id = '<%- self %>';
+var id = '<%- self._id %>';
 
-socket.on(id, function({ message, from }) {
+socket.on(id, function({ message, send, from }) {
   var list = document.getElementById('messages');
+  var container = document.createElement('div');
   var item = document.createElement('li');
+  var time = document.createElement('span');
+  console.log(time);
+  time.className = 'time';
+  time.innerHTML = send;
   item.className = from === id ? 'send' : 'received';
-  item.innerHTML = message;
+  container.innerHTML = message;
+  container.appendChild(time);
+  item.appendChild(container);
   list.appendChild(item);
   list.lastChild.scrollIntoView(true);
 });

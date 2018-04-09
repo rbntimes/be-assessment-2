@@ -3,7 +3,7 @@
 module.exports = function(lat, lng, rad, key, detail = 8) {
   var uri = 'https://maps.googleapis.com/maps/api/staticmap?';
   var staticMapSrc = 'center=' + lat + ',' + lng;
-  staticMapSrc += '&size=600x300';
+  staticMapSrc += '&size=380x190';
   staticMapSrc += '&path=color:0xff0000ff:weight:1';
 
   var r = 6371;

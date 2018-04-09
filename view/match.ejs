@@ -1,16 +1,18 @@
 <% include head.ejs %>
 <title><%= username %></title>
 <% include nav.ejs %>
-<h1><%= username %></h1>
+<h1><%= username %>, <%= age %></h1>
 <div>
   <p>Do you think <%= username %> could be the one?</p>
   <% if (gender == 'male') { var gender = 'He' } else { var gender = 'She' } %>
   <% if (questions.length && questions.length > 0) { %>
     <p>
-      <%= gender %> stated a few questions, if you get them right you'll be able to start a conversation!
+      <%= gender %> stated a few questions, if you get them right you might be able to start a conversation!
     </p>
-    <img id="gif" data-tag="question" src="" />
+    <img id="gif" data-tag="in love" src="" />
     <a href="/users/<%= _id %>/questions">Let's go</a>
+  <% } else { %>
+    <p><%= username %> does not have any questions</p>
   <% } %>
 </div>
 

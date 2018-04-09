@@ -2,24 +2,29 @@
 <img src="<%= map %>">
 
 <% for (var index = 0; index < data.length; index++) { %>
-  <a href="/users/<%= data[index].id %>/<%= data[index].match === true ? 'match' : '' %>">
     <div class="item">
-      <h3>
-        <%= data[index].name %>, <%= data[index].age %>
-      </h3>
-      <h3><%= index + 1 %>
-        <% if (data[index].match === true) { %>
-          ❤️
-        <% } else { %>
-          <%= data[index].unlocked && data[index].completed === true ? "⭐️" : '' %>
-          <%= !data[index].unlocked && data[index].completed === true ? "✅" : '' %>
-          <%= data[index].awaiting === true ? "✍️" : '' %>
-        <% } %>
-      </h3>
+      <a href="/users/<%= data[index].id %>">
+        <h3>
+          <%= data[index].name %>, <%= data[index].age %>
+        </h3>
+      </a>
+      <div class="status">
+        <span>
+          <% if (data[index].match === true) { %>
+            <a href="/users/<%= data[index].id %>/<%= data[index].match === true ? 'match' : 'questions' %>">
+              Open chat
+            </a>
+            ❤️ ✍️
+          <% } else { %>
+            <%= data[index].unlocked && data[index].completed === true ? "Waiting ⭐️" : '' %>
+            <%= !data[index].unlocked && data[index].completed === true ? "Failed 🚫" : '' %>
+          <% } %>
+        </span>
+        <h3> <%= index + 1 %></h3>
+      </div>
     </div>
     <p class=meta>
       <span><%= data[index].matchPercentage %>% match!</span>
       <span><%= data[index].distance %> kilometer</span>
     </p>
-  </a>
 <% } %>
