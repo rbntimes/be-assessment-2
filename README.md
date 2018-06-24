@@ -19,10 +19,12 @@ By answering a endless-y (see what i did there?) growing pool of questions you a
    MY_MOST_BELOVED_SECRET=kanyeisthemostinfluential (<== may be anything)
    GOOGLE_MAPS_KEY=YOURGOOGLEMAPSKEY
 4. `npm install || yarn`
-5. Open another tab in your terminal, navigate to endless and `run mongod --dbpath db`
-6. To start with some test users run `node mongo.js 100 50000`, this will fill the database with 100 test users in a radius of 50km (from utrecht, might need to rethink that)
-7. `npm run start || yarn start`
-8. create a account and find your match!
+5. `brew install mongodb` (if [brew](https://brew.sh/) installed ofcourse)
+6. `mkdir db`
+7. Open another tab in your terminal, navigate to endless and run `mongod --dbpath db`
+8. Open a new tab, to start with some test users run `node mongo.js 100 50000`, this will fill the database with 100 test users in a radius of 50km (from utrecht, might need to rethink that)
+9. `npm run start || yarn start`
+10. create a account and find your match!
 
 ### Still not convinced?
 
