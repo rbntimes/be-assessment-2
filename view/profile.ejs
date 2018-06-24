@@ -5,9 +5,11 @@
 
 <div>
   <h2>Your settings </h2>
+  <p>Don't worry, no one will see any of this untill you match. Then your name and profile picture will be shown</p>
   <img
     src="<%= map %>">
   <form action=/profile method=post>
+    <label>My name is </label><input value=<%= name %> name=name />
     <label>I'm a </label>
       <select name=age value=<%= age %>>
         <% for (var index = 18; index < 80; index++) { %>
@@ -53,7 +55,6 @@
      </select>
      <label> kilometer away </label>
      <input type="submit" />
-
    </form>
 </div>
 

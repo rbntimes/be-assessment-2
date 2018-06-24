@@ -1,8 +1,8 @@
-const ipinfo = require('ipinfo');
-const bcrypt = require('bcrypt');
+const ipinfo = require("ipinfo");
+const bcrypt = require("bcrypt");
 
 module.exports = function(user, cb) {
-  loc = '';
+  loc = "";
   ipinfo((err, info) => {
     return done(info);
   });
@@ -17,16 +17,16 @@ module.exports = function(user, cb) {
           username,
           password: hash,
           location: {
-            type: 'Point',
-            coordinates: [Number(loc.split(',')[0]), Number(loc.split(',')[1])],
+            type: "Point",
+            coordinates: [Number(loc.split(",")[0]), Number(loc.split(",")[1])]
           },
-          prefers: 'female',
-          maxRange: '100000',
+          prefers: "female",
+          maxRange: "100000",
           age: 20,
-          gender: 'male',
+          gender: "male",
           minAge: 18,
           maxAge: 50,
-          questions: [],
+          questions: []
         };
         klaar(user);
       });

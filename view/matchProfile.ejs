@@ -1,0 +1,15 @@
+<% include head.ejs %>
+  <title>
+    <%= name %>
+  </title>
+  <% include nav.ejs %>
+  <img src=https://randomuser.me/api/portraits/<%= gender === 'femal' ? 'women' : 'men' %>/<%= age %>.jpg />
+    <h1>
+      <%= name %>,
+        <%= age %>
+    </h1>
+    <div>
+      <a href="/users/<%= _id%>/match>">Chat met <%= name %></a>
+    </div>
+
+    <% include tail.ejs %>
