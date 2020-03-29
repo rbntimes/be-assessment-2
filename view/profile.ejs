@@ -9,7 +9,7 @@
   <img
     src="<%= map %>">
   <form action=/profile method=post>
-    <label>My name is </label><input value=<%= name %> name=name />
+    <label>My name is </label><input name=name value=<%= name %>></input>
     <label>I'm a </label>
       <select name=age value=<%= age %>>
         <% for (var index = 18; index < 80; index++) { %>

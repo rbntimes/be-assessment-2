@@ -14,6 +14,7 @@ module.exports = function(user, cb) {
       bcrypt.hash(password, salt, function(err, hash) {
         if (err) return next(err);
         user = {
+          name: '',
           username,
           password: hash,
           location: {
