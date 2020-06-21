@@ -1,5 +1,5 @@
 const ipinfo = require("ipinfo");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt-nodejs");
 
 module.exports = function(user, cb) {
   loc = "";
