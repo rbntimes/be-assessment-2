@@ -17,7 +17,7 @@ const Register = () => (
         return errors;
       }}
       onSubmit={async (values, { setSubmitting }) => {
-        const response = await fetch('/api/register', {
+        const response = await fetch('/api/login', {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             credentials: 'same-origin', // include, *same-origin, omit
