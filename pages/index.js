@@ -18,4 +18,13 @@ function Home() {
     )
 }
 
+export async function getServerSideProps({req}) {
+    // const res = await fetch(`http://localhost:3000/api/list`)
+    // const data = await res.json()
+  
+    // return { props: { data } }
+    return {props: {}}
+  }
+  
+
 export default Home
