@@ -42,7 +42,6 @@ https.get(
 );
 
 function getUsers(apiQuestions) {
-  // DOE NIET GIERIG MET DIE GET BABY DEEL UIT (bombadier - zwart licht)
   https.get(`https://randomuser.me/api/?results=${userAmount}`, res => {
     res.setEncoding('utf8');
     let body = '';

@@ -1,6 +1,8 @@
 <% include head.ejs %>
 <title>Endless</title>
-<% include nav.ejs %>
+<% if (user) { %>
+  <% include nav.ejs %>
+<% } %>
 
 <body>
   <div id=list class=list>

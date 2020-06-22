@@ -15,7 +15,6 @@ const MongoStore = require("connect-mongo")(session);
 const passport = require("passport");
 const Strategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt-nodejs");
-const min = require("lodash/fp/min");
 const { values, merge, keyBy } = require("lodash");
 const moment = require("moment");
 require("dotenv").config();
@@ -110,83 +109,9 @@ app
   .get("/profile", profile)
   .get("/ownquestions", ownquestions)
   .get("/register", register)
-  .get("/logout", function(req, res) {
-    req.session.destroy(function(err) {
-      res.redirect("/");
-    });
-  })
-  .post("/login", function(req, res, next) {
-    const { username, password } = req.body;
-
-    if (!username || !password) {
-      code = 400;
-      res.status(code).render("login.ejs", {
-        error: authentication[code],
-        status: code
-      });
-    } else {
-      passport.authenticate("local", function(err, user) {
-        req.logIn(user, () => {
-          if (err) {
-            res.status(err).render("login.ejs", {
-              error: authentication.login[err],
-              status: err
-            });
-          } else {
-            res.status(200).redirect("/");
-          }
-        });
-      })(req, res, next);
-    }
-  })
-  .post("/register", function(req, res, next) {
-    let code = 200;
-    const { username, password, passwordConf } = req.body;
-    if (!username || !password || !passwordConf) {
-      code = 400;
-      res.status(code).render("register.ejs", {
-        error: authentication[code],
-        status: code
-      });
-    }
-
-    db.collection("users")
-      .findOne({ username: username })
-      .then(function(user) {
-        if (user) {
-          code = 409;
-          res.status(code).render("register.ejs", {
-            error: authentication.register[code],
-            status: code
-          });
-        } else if (password !== passwordConf) {
-          code = 422;
-          res.status(code).render("register.ejs", {
-            error: authentication.register[code],
-            status: code
-          });
-        } else {
-          createUser(req.body, done);
-
-          function done(user) {
-            db.collection("users")
-              .insertOne(user)
-              .then(function(user) {
-                passport.authenticate("local", function(err, user) {
-                  req.logIn(user, function(err) {
-                    if (err) {
-                      return res.status(err).redirect("/profile");
-                    }
-                    if (!err) {
-                      res.status(201).redirect("/profile");
-                    }
-                  });
-                })(req, res, next);
-              });
-          }
-        }
-      });
-  })
+  .get("/logout", logout)
+  .post("/login", login)
+  .post("/register", registerPost)
   .get("/users/:id", match)
   .get("/users/:id/profile", matchProfile)
   .get("/users/:id/questions", matchQuestions)
@@ -506,13 +431,62 @@ function matchQuestions(req, res, next) {
   }
 }
 
-function register(req, res, next) {
+function register(req, res) {
   if (!req.user) {
     res.render("register.ejs", { status: 200 });
   } else {
     res.redirect("/");
   }
 }
+
+function registerPost(req, res, next) {
+    let code = 200;
+    const { username, password, passwordConf } = req.body;
+    if (!username || !password || !passwordConf) {
+      code = 400;
+      res.status(code).render("register.ejs", {
+        error: authentication[code],
+        status: code
+      });
+    }
+
+    db.collection("users")
+      .findOne({ username: username })
+      .then(function(user) {
+        if (user) {
+          code = 409;
+          res.status(code).render("register.ejs", {
+            error: authentication.register[code],
+            status: code
+          });
+        } else if (password !== passwordConf) {
+          code = 422;
+          res.status(code).render("register.ejs", {
+            error: authentication.register[code],
+            status: code
+          });
+        } else {
+          createUser(req.body, done);
+
+          function done(user) {
+            db.collection("users")
+              .insertOne(user)
+              .then(function(user) {
+                passport.authenticate("local", function(err, user) {
+                  req.logIn(user, function(err) {
+                    if (err) {
+                      return res.status(err).redirect("/profile");
+                    }
+                    if (!err) {
+                      res.status(201).redirect("/profile");
+                    }
+                  });
+                })(req, res, next);
+              });
+          }
+        }
+      });
+  }
 
 function profile(req, res, next) {
   if (req.user) {
@@ -571,6 +545,31 @@ function ownquestions(req, res, next) {
     res.render("login.ejs", { status: 401 });
   }
 }
+
+function login(req, res, next) {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+      code = 400;
+      res.status(code).render("login.ejs", {
+        error: authentication[code],
+        status: code
+      });
+    } else {
+      passport.authenticate("local", function(err, user) {
+        req.logIn(user, () => {
+          if (err) {
+            res.status(err).render("login.ejs", {
+              error: authentication.login[err],
+              status: err
+            });
+          } else {
+            res.status(200).redirect("/");
+          }
+        });
+      })(req, res, next);
+    }
+  }
 
 function updateProfile(req, res, next) {
   const {
@@ -703,4 +702,10 @@ function add(req, res, next) {
 
 function notFound(req, res) {
   res.status(404).render("not-found.ejs");
+}
+
+function logout(req, res) {
+    req.session.destroy(function(err) {
+      res.redirect("/");
+    });
 }
