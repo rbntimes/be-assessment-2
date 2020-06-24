@@ -119,17 +119,17 @@ app
   .get("/users/:id/match", message)
   .use(notFound);
 
-io.on("connection", function(socket) {});
+io.on("connection", function() {});
 
 http.listen(3000, function() {});
 
-function endless(req, res, next) {
+function endless(req, res) {
   var user = req.user;
 
   res.render("endless.ejs", { user: user });
 }
 
-function getList(req, res, next) {
+function getList(req, res) {
   if (req.user) {
     const {
       _id,
@@ -148,7 +148,8 @@ function getList(req, res, next) {
       process.env.GOOGLE_MAPS_KEY
     );
 
-    matches = [];
+    let matches = [];
+    
     var preferences = {
       _id: { $ne: _id },
       gender: prefers,
@@ -192,7 +193,7 @@ function getList(req, res, next) {
         });
     });
 
-    function goCompareThings(
+    goCompareThings(
       user,
       userAnswers,
       ownAnswers,
@@ -296,25 +297,6 @@ function match(req, res, next) {
         res.render("match.ejs", user);
       });
   }
-
-  // var id = req.params.id;
-  // db.collection('users').findOne({ _id: ObjectId(id) }, done);
-  //
-  // function done(err, user) {
-  //   getUserAnswers(db, ObjectId(id), function(userAnswers) {
-  //     user.questions.forEach(q => {
-  //       answered = find(userAnswers, a => {
-  //         return a.questionId.toString() === q._id.toString();
-  //       });
-  //       console.log(user.questions, answered);
-  //       Object.assign(user, {
-  //         questions: user.questions || [],
-  //         answered: [answered] || [],
-  //       });
-  //       res.render('match.ejs', user);
-  //     });
-  //   });
-  // }
 }
 
 function matchProfile(req, res, next) {
@@ -511,7 +493,6 @@ function ownquestions(req, res, next) {
   const { _id, questions = [] } = req.user;
   const userQuestions = questions.map(q => ObjectId(q._id));
 
-  let answers = [];
   if (_id) {
     db.collection("questions")
       .find({ user: ObjectId(_id) })
