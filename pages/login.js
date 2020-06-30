@@ -1,35 +1,24 @@
 import { Formik } from 'formik';
 
-const Register = () => (
+const Login = () => (
   <div>
-    <h1>Register</h1>
+    <h1>Login</h1>
     <Formik
-      initialValues={{ email: '', password: '' }}
-      validate={values => {
+      initialValues={{ username: '', password: '' }}
+      validate={(values) => {
         const errors = {};
-        if (!values.email) {
-          errors.email = 'Required';
-        } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-        ) {
-          errors.email = 'Invalid email address';
+        if (!values.username) {
+          errors.username = 'Required';
         }
         return errors;
       }}
       onSubmit={async (values, { setSubmitting }) => {
-        const response = await fetch('/api/login', {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(values) // body data type must match "Content-Type" header
-            });
-            return response.json()
+        const response = await fetch('/api/auth', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(values),
+        });
+        return response.json();
         setSubmitting(false);
       }}
     >
@@ -45,13 +34,13 @@ const Register = () => (
       }) => (
         <form onSubmit={handleSubmit}>
           <input
-            type="email"
-            name="email"
+            type="username"
+            name="username"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.email}
+            value={values.username}
           />
-          {errors.email && touched.email && errors.email}
+          {errors.username && touched.username && errors.username}
           <input
             type="password"
             name="password"
@@ -69,4 +58,4 @@ const Register = () => (
   </div>
 );
 
-export default Register;
+export default Login;

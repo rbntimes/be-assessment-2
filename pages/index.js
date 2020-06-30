@@ -1,30 +1,46 @@
+import React, { useEffect, useState } from 'react';
+import { useCurrentUser } from '../lib/hooks';
+import Endless from '../components/Endless';
+import List from '../components/List';
+import { useRouter } from 'next/router';
+import useSWR from 'swr';
+import { applySession } from 'next-session';
+import fetcher from '../lib/fetch';
+import { getUser } from '../lib/db';
+import queryString from 'query-string';
+
 function Home() {
-    return (
-        <div>
-            <h1>Welcome</h1>
-        <p>
-          Endless is a dating site that finds your perfect match according to your
-          own custom preferences
-        </p>
-        <p>
-          To find your perfect match, we'll compare the answers you give on a large
-          stack of questions against other users of Endless. Want to give it a try?
-        </p>
-        <p>
-          <a href="/register">Sign up</a> / <a href="/profile">log in</a> now!
-          </p>
-        </div>
-        
-    )
+  // const [user] = useCurrentUser();
+  const { data, error } = useSWR('/api/list', fetcher);
+
+  if (error) {
+    return <span>Error</span>;
+  }
+
+  if (!data) {
+    return <Endless />;
+  }
+
+  return <List users={data} />;
 }
 
-export async function getServerSideProps({req}) {
-    // const res = await fetch(`http://localhost:3000/api/list`)
-    // const data = await res.json()
-  
-    // return { props: { data } }
-    return {props: {}}
-  }
-  
+// export async function getServerSideProps({ req, res }) {
+//   const { data } = fetch('http://localhost:3000/api/user');
+//
+//   console.log(data);
+//   // const user = await getUser.json();
+//   // if (user) {
+//   //   console.log(user);
+//   // }
+//   // if (!user) context.res.statusCode = 404;
+//   // const res = await fetch(`http://localhost:3000/api/list`, {
+//   //   mode: 'cors', // no-cors, *cors, same-origin
+//   //   cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+//   //   credentials: 'same-origin', // include, *same-origin, omit
+//   // });
+//   // const data = await res.json();
+//   // console.log(data);
+//   return { props: {} };
+// }
 
-export default Home
+export default Home;
