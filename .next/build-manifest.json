@@ -31,6 +31,10 @@
     "/question": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
+    ],
+    "/user/[user]": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ]
   }
 }

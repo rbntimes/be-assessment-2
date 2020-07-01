@@ -9,23 +9,22 @@ handler.use(middleware);
 handler.get(async (req, res) => res.json({ user: extractUser(req) }));
 
 handler.patch(async (req, res) => {
-  if (!req.user) {
-    req.status(401).end();
-    return;
-  }
-
-  const { name, bio } = req.body;
-  await req.db.collection('users').updateOne(
+  const { name, gender, age, minAge, maxAge, prefers } = req.body;
+  const user = await req.db.collection('users').updateOne(
     { _id: req.user._id },
     {
       $set: {
         ...(name && { name }),
-        bio: bio || '',
-        ...(profilePicture && { profilePicture }),
+        ...(gender && { gender }),
+        ...(age && { age }),
+        ...(minAge && { minAge }),
+        ...(maxAge && { maxAge }),
+        ...(prefers && { prefers }),
       },
     }
   );
-  res.json({ user: { name, bio } });
+  console.log(user);
+  res.status(200).json({ user });
 });
 
 export default handler;

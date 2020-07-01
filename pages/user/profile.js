@@ -6,20 +6,20 @@ import queryString from 'query-string';
 import { useCurrentUser } from '../../lib/hooks';
 import Endless from '../../components/Endless';
 import User from '../../components/User';
+import Profile from '../../components/Profile';
 import List from '../../components/List';
 import fetcher from '../../lib/fetch';
-import Profile from '../../components/Profile';
-
 import { getUser } from '../../lib/db';
 import middleware from '../../middlewares/middleware';
 
 function UserProfile({ user }) {
   const [loggedinUser] = useCurrentUser();
-  if (!user || !loggedinUser) {
+
+  if (!user) {
     return <Endless />;
   }
 
-  if (loggedinUser?._id === user._id) {
+  if (loggedinUser._id === user._id) {
     return <Profile user={user} />;
   }
 
