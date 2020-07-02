@@ -13,7 +13,7 @@ handler.get(async (req, res) => {
   const preferences = {
     _id: { $ne: _id },
     gender: prefers,
-    age: { $lte: maxAge, $gte: minAge },
+    age: { $lte: Number(maxAge), $gte: Number(minAge) },
     location: {
       $near: {
         $geometry: {
@@ -24,7 +24,7 @@ handler.get(async (req, res) => {
       },
     },
   };
-
+  console.log(preferences);
   const map = drawGoogleMaps(
     req.user.location.coordinates[0],
     req.user.location.coordinates[1],

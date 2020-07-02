@@ -10,6 +10,7 @@ handler.get(async (req, res) => res.json({ user: extractUser(req) }));
 
 handler.patch(async (req, res) => {
   const { name, gender, age, minAge, maxAge, prefers } = req.body;
+
   const user = await req.db.collection('users').updateOne(
     { _id: req.user._id },
     {
@@ -23,7 +24,7 @@ handler.patch(async (req, res) => {
       },
     }
   );
-  console.log(user);
+
   res.status(200).json({ user });
 });
 

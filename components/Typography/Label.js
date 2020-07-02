@@ -1,3 +1,5 @@
+import React from 'react';
+
 import styled from 'styled-components';
 
 const Label = styled.label`
@@ -10,14 +12,19 @@ const Label = styled.label`
 
 
   span {
-    display: ${({ displayOptions }) => displayOptions.big && displayOptions.big};
+    display: ${({ displayOptions }) =>
+      displayOptions.big && displayOptions.big};
     @media only screen and (min-width: 768px) {
-      display:${({ displayOptions }) => displayOptions.small && displayOptions.small};
+      display:${({ displayOptions }) =>
+        displayOptions.small && displayOptions.small};
   }
 `;
 
 export default ({
-  children, onClick, handle = '', displayOptions = { big: '', small: '' },
+  children,
+  onClick,
+  handle = '',
+  displayOptions = { big: '', small: '' },
 }) => (
   <Label displayOptions={displayOptions} onClick={onClick}>
     {children}

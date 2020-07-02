@@ -15,12 +15,7 @@ function Home() {
     return <Endless />;
   }
 
-  return (
-    <div>
-      <img alt="Map met voorkeuren" src={data.map} />
-      <List users={data.results} />
-    </div>
-  );
+  return <List users={data.results} />;
 }
 
 export default Home;

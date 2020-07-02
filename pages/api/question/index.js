@@ -1,7 +1,7 @@
 import nextConnect from 'next-connect';
 import middleware from '../../../middlewares/middleware';
-import { extractUser } from '../../../lib/api-helpers';
-const ObjectId = require('mongodb').ObjectId;
+
+const { ObjectId } = require('mongodb');
 
 const handler = nextConnect();
 
@@ -28,8 +28,8 @@ handler.post(async (req, res) => {
     {
       user: ObjectId(req.user._id),
       questionId: ObjectId(questionId),
-      question: question,
-      answer: answer,
+      question,
+      answer,
     },
     { upsert: true }
   );

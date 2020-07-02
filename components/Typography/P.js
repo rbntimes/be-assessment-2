@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import React from 'react';
 
 const P = styled.p`
   letter-spacing: 3px;

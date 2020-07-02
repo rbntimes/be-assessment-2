@@ -2,7 +2,7 @@ import { useCurrentUser } from '../lib/hooks';
 
 function Home({ user }) {
   if (user) {
-    return <span></span>;
+    return <span />;
   }
 
   return (

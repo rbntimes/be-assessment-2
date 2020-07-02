@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
-import { applySession } from 'next-session';
-import queryString from 'query-string';
 import { useCurrentUser } from '../../lib/hooks';
 import Endless from '../../components/Endless';
 import User from '../../components/User';
@@ -10,31 +8,21 @@ import List from '../../components/List';
 import fetcher from '../../lib/fetch';
 import Profile from '../../components/Profile';
 
-import { getUser } from '../../lib/db';
-import middleware from '../../middlewares/middleware';
-
-function UserProfile({ user }) {
+function UserProfile() {
   const [loggedinUser] = useCurrentUser();
-  if (!user || !loggedinUser) {
+  const router = useRouter();
+  const { user } = router.query;
+  const { data, error } = useSWR('/api/user/' + user, fetcher);
+
+  if (!data || !loggedinUser) {
     return <Endless />;
   }
 
-  if (loggedinUser?._id === user._id) {
-    return <Profile user={user} />;
+  if (loggedinUser?._id === data?.user._id) {
+    return <Profile map={data.map} user={data.user} />;
   }
 
-  return <User user={user} />;
-}
-
-export async function getServerSideProps(context) {
-  await middleware.apply(context.req, context.res);
-  const res = await fetch(
-    `http://localhost:3000/api/user/${context.params.user}`
-  );
-
-  const user = await res.json();
-
-  return { props: { user } };
+  return <User user={data.user} />;
 }
 
 export default UserProfile;

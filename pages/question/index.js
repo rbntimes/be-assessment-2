@@ -19,7 +19,7 @@ const Answer = styled.button`
   margin: 0;
   border-radius: 3px;
   text-decoration: none;
-  background: purple;
+  background: pink;
   color: #ffffff;
   font-family: sans-serif;
   font-size: 1rem;

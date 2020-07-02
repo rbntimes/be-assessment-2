@@ -1,37 +1,45 @@
+import React from 'react';
+import styled from 'styled-components';
+import { H3 } from './Typography';
+
+const Ul = styled.ul`
+  list-item-style: none
+  margin: 0;
+  padding: 0;
+  ;
+`;
+
+const Item = styled.li`
+  display: flex;
+  margin: 0.5rem 0;
+  padding: 0;
+  align-items: center;
+`;
+
+const Picture = styled.img`
+  width: 100px;
+  margin-right: 1rem;
+`;
+
+const A = styled.a`
+  text-decoration: none;
+`;
+
 function List({ users }) {
   return (
-    <ul>
+    <Ul>
       {users.map((user) => (
-        <li>
-          <a href={`/user/${user._id}`}>
-            <h3>
+        <A href={`/user/${user._id}`}>
+          <Item>
+            <Picture src={user.picture} />
+            <H3>
               {user.name}, {user.age}
-            </h3>
-          </a>
-        </li>
+            </H3>
+          </Item>
+        </A>
       ))}
-    </ul>
+    </Ul>
   );
 }
 
 export default List;
-
-// <div class="status">
-//   <span>
-//     <% if (data[index].match === true) { %>
-//       <a href="/users/<%= data[index].id %>/<%= data[index].match === true ? 'match' : 'questions' %>">
-//         Open chat
-//       </a>
-//       ❤️ ✍️
-//     <% } else { %>
-//       <%= data[index].unlocked && data[index].completed === true ? "Waiting ⭐️" : '' %>
-//       <%= !data[index].unlocked && data[index].completed === true ? "Failed 🚫" : '' %>
-//     <% } %>
-//   </span>
-//   <h3> <%= index + 1 %></h3>
-// </div>
-// </div>
-// <p class=meta>
-// <span><%= data[index].matchPercentage %>% match!</span>
-// <span><%= data[index].distance %> kilometer</span>
-// </p>

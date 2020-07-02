@@ -1,8 +1,8 @@
-import App from 'next/app';
 import React from 'react';
 
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { useCurrentUser } from '../lib/hooks';
+import Layout from '../components/layout';
 
 const theme = {
   colors: {
@@ -51,7 +51,6 @@ const GlobalStyle = createGlobalStyle`
       Helvetica, sans-serif;
   }
 `;
-import Layout from '../components/layout';
 
 export default function MyApp({ Component, pageProps }) {
   const [user] = useCurrentUser();
