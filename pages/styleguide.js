@@ -1,6 +1,8 @@
 import React from 'react';
 import { H1, H2, H3, H4, H5 } from '../components/Typography';
 import Button from '../components/Button';
+import Select from '../components/Select';
+import Input from '../components/Input';
 
 function StyleGuide() {
   const ipsum =
@@ -29,7 +31,20 @@ function StyleGuide() {
       </H5>
       Button: <br />
       <br />
-      <Button />
+      <Button>Knop</Button>
+      <br /> <br />
+      Select <br />
+      <Select type="age" name="age">
+        {Array(80 - 18)
+          .fill((i) => i)
+          .map((_, index) => (
+            <option value={index + 18}>{index + 18}</option>
+          ))}
+      </Select>
+      <br /> <br />
+      Input: <br />
+      <br />
+      <Input />
     </div>
   );
 }

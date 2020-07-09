@@ -40,10 +40,10 @@ const Layout = ({ user, children }) => (
           <A>Questions</A>
         </Link>
         <Link href={`/user/${user?._id}`}>
-          <A>Profiel</A>
+          <A>Profile</A>
         </Link>
         <Link href={`/styleguide`}>
-          <A>Stijlgids</A>
+          <A>Styleguide</A>
         </Link>
       </Nav>
     ) : null}

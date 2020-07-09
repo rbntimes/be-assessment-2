@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import useSWR from 'swr';
 import { Formik } from 'formik';
 import Endless from '../../components/Endless';
+import Button from '../../components/Button';
 import { H1 } from '../../components/Typography';
 
 import fetcher from '../../lib/fetch';
@@ -11,21 +12,6 @@ import fetcher from '../../lib/fetch';
 const Question = styled.div`
   display: flex;
   align-items: flex-end;
-`;
-const Answer = styled.button`
-  display: inline-block;
-  border: none;
-  padding: 1rem 2rem;
-  margin: 0;
-  border-radius: 3px;
-  text-decoration: none;
-  background: pink;
-  color: #ffffff;
-  font-family: sans-serif;
-  font-size: 1rem;
-  cursor: pointer;
-  text-align: center;
-  margin-bottom: 3px;
 `;
 
 const Answers = styled.div`
@@ -76,7 +62,7 @@ function Page() {
           </Question>
           <Answers>
             {data.answers.map((answer) => (
-              <Answer
+              <Button
                 type="radio"
                 name="answer"
                 value={answer}
@@ -87,7 +73,7 @@ function Page() {
                 }}
               >
                 {answer}
-              </Answer>
+              </Button>
             ))}
           </Answers>
         </Form>

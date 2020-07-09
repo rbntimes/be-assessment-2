@@ -2,6 +2,10 @@ import React from 'react';
 import { Formik } from 'formik';
 import styled from 'styled-components';
 
+import Select from './Select';
+import Input from './Input';
+import Button from './Button';
+
 const Form = styled.form`
   display: grid;
   grid-template-columns: 1fr;
@@ -13,22 +17,6 @@ const Label = styled.label`
   display: grid;
   grid-row: auto;
   font-size: 16px;
-`;
-
-const Button = styled.button`
-  display: inline-block;
-  border: none;
-  padding: 1rem 2rem;
-  margin: 0;
-  border-radius: 3px;
-  text-decoration: none;
-  background: pink;
-  color: #ffffff;
-  font-family: sans-serif;
-  font-size: 1rem;
-  cursor: pointer;
-  text-align: center;
-  margin-bottom: 3px;
 `;
 
 function User({ user, map }) {
@@ -56,7 +44,7 @@ function User({ user, map }) {
           <img alt="Jouw voorkeuren" src={map} />
           <Label>
             Naam:
-            <input
+            <Input
               type="name"
               name="name"
               onChange={handleChange}
@@ -67,7 +55,7 @@ function User({ user, map }) {
 
           <Label>
             Age:
-            <select
+            <Select
               type="age"
               name="age"
               onChange={handleChange}
@@ -79,12 +67,12 @@ function User({ user, map }) {
                 .map((_, index) => (
                   <option value={index + 18}>{index + 18}</option>
                 ))}
-            </select>
+            </Select>
           </Label>
 
           <Label>
             Gender:
-            <select
+            <Select
               type="gender"
               name="gender"
               onChange={handleChange}
@@ -93,12 +81,12 @@ function User({ user, map }) {
             >
               <option value="male">Male</option>
               <option value="female">Female</option>
-            </select>
+            </Select>
           </Label>
 
           <Label>
             Minimum age:
-            <select
+            <Select
               type="minAge"
               name="minAge"
               onChange={handleChange}
@@ -110,12 +98,12 @@ function User({ user, map }) {
                 .map((_, index) => (
                   <option value={index + 18}>{index + 18}</option>
                 ))}
-            </select>
+            </Select>
           </Label>
 
           <Label>
             Maximum age:
-            <select
+            <Select
               type="maxAge"
               name="maxAge"
               onChange={handleChange}
@@ -127,12 +115,12 @@ function User({ user, map }) {
                 .map((_, index) => (
                   <option value={index + 18}>{index + 18}</option>
                 ))}
-            </select>
+            </Select>
           </Label>
 
           <Label>
             Preferably:
-            <select
+            <Select
               type="prefers"
               name="prefers"
               onChange={handleChange}
@@ -141,7 +129,7 @@ function User({ user, map }) {
             >
               <option value="male">Male</option>
               <option value="female">Female</option>
-            </select>
+            </Select>
           </Label>
 
           <Button type="submit" disabled={isSubmitting}>

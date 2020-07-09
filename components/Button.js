@@ -8,17 +8,22 @@ const Button = styled.button`
   margin: 0;
   border-radius: 3px;
   text-decoration: none;
-  background: pink;
-  color: #ffffff;
+  background: #0000ff;
+  color: white;
   font-family: sans-serif;
   font-size: 1rem;
   cursor: pointer;
   text-align: center;
   margin-bottom: 3px;
+
+  @media (prefers-color-scheme: dark) {
+    color: black;
+    background: pink;
+  }
 `;
 
-function ButtonRender() {
-  return <Button type="submit">Submit</Button>;
+function ButtonRender(props) {
+  return <Button {...props}>{props.children}</Button>;
 }
 
 export default ButtonRender;
