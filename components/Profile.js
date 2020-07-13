@@ -1,6 +1,9 @@
 import React from 'react';
 import { Formik } from 'formik';
 import styled from 'styled-components';
+import Router from 'next/router';
+
+import { useCurrentUser } from '../lib/hooks';
 
 import Select from './Select';
 import Input from './Input';
@@ -20,6 +23,16 @@ const Label = styled.label`
 `;
 
 function User({ user, map }) {
+  const [_, { mutate }] = useCurrentUser();
+
+  const handleLogout = async () => {
+    await fetch('/api/auth', {
+      method: 'DELETE',
+    });
+    mutate(null);
+
+    return Router.push('/');
+  };
   return (
     <Formik
       initialValues={{ ...user }}
@@ -135,7 +148,7 @@ function User({ user, map }) {
           <Button type="submit" disabled={isSubmitting}>
             Submit
           </Button>
-          <a href="/logout">Sign out</a>
+          <a onClick={handleLogout}>Logout</a>
         </Form>
       )}
     </Formik>

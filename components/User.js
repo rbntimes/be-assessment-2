@@ -2,11 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { H1 } from './Typography';
 
-const Profile = styled.div``;
+const Profile = styled.div`
+  display: flex;
+`;
 const Bio = styled.p``;
 
 const Picture = styled.img`
   width: 100%;
+  height auto;
   margin: 1rem 0;
 `;
 

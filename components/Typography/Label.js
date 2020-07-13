@@ -6,10 +6,10 @@ const Label = styled.label`
   font-size: 12px;
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 3px;
-
 
   span {
     display: ${({ displayOptions }) =>

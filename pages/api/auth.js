@@ -8,13 +8,16 @@ const handler = nextConnect();
 handler.use(middleware);
 
 handler.post(passport.authenticate('local'), (req, res) => {
-  console.log(req)
-  res.json({ user: extractUser(req) });
+  res.status(201).json({ user: extractUser(req) });
 });
 
 handler.delete((req, res) => {
   req.logOut();
-  res.status(204).end();
+  res
+    .writeHead(301, {
+      Location: '/',
+    })
+    .end();
 });
 
 export default handler;

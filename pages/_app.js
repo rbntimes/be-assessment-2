@@ -1,8 +1,10 @@
 import React from 'react';
 
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import useSWR from 'swr';
 import { useCurrentUser } from '../lib/hooks';
 import Layout from '../components/layout';
+import fetcher from '../lib/fetch';
 
 const theme = {
   colors: {
@@ -53,12 +55,14 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export default function MyApp({ Component, pageProps }) {
-  const [user] = useCurrentUser();
+  const { data, error } = useSWR('/api/user', fetcher, {
+    revalidateOnMount: true,
+  });
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Layout user={user}>
+      <Layout user={data?.user}>
         <Component {...pageProps} />
       </Layout>
     </ThemeProvider>

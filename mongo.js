@@ -1,9 +1,10 @@
-const questions = require('./questions_txt');
 const https = require('https');
-const MongoClient = require('mongodb').MongoClient;
-const ObjectId = require('mongodb').ObjectId;
+const { MongoClient } = require('mongodb');
+const { ObjectId } = require('mongodb');
 const calcMax = require('lodash/fp/max');
+const questions = require('./questions_txt');
 const randomGeoPoints = require('./randomgeo');
+
 const userAmount = process.argv[2] || 500;
 const userRadius = process.argv[3] || 150000;
 const locations = randomGeoPoints(
@@ -19,20 +20,20 @@ function capitalize(string) {
 }
 
 function minMaxAge() {
-  var min = calcMax([Math.floor(Math.random() * 80), 18]);
-  var max = calcMax([Math.floor(Math.random() * 80), min + 5]);
+  const min = calcMax([Math.floor(Math.random() * 80), 18]);
+  const max = calcMax([Math.floor(Math.random() * 80), min + 5]);
   return {
-    min: min,
-    max: max,
+    min,
+    max,
   };
 }
 
 https.get(
   'https://opentdb.com/api.php?amount=50&difficulty=easy&type=multiple',
-  res => {
+  (res) => {
     res.setEncoding('utf8');
     let body = '';
-    res.on('data', data => {
+    res.on('data', (data) => {
       body += data;
     });
     res.on('end', () => {
@@ -42,10 +43,10 @@ https.get(
 );
 
 function getUsers(apiQuestions) {
-  https.get(`https://randomuser.me/api/?results=${userAmount}`, res => {
+  https.get(`https://randomuser.me/api/?results=${userAmount}`, (res) => {
     res.setEncoding('utf8');
     let body = '';
-    res.on('data', data => {
+    res.on('data', (data) => {
       body += data;
     });
     res.on('end', () => {
@@ -56,7 +57,7 @@ function getUsers(apiQuestions) {
 
   function fillApiQuestions() {
     list = [];
-    for (var i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
       rand = Math.floor(Math.random() * apiQuestions.results.length);
       apiQuestions.results[rand].incorrect_answers.push(
         apiQuestions.results[rand].correct_answer
@@ -70,19 +71,19 @@ function getUsers(apiQuestions) {
   }
 
   function getUserData(data) {
-    var users = [];
-    var answers = [];
-    var questionList = [];
+    let users = [];
+    const answers = [];
+    const questionList = [];
 
-    for (var index = 0; index < data.results.length; index++) {
+    for (let index = 0; index < data.results.length; index++) {
       users.push({
         name: `${capitalize(data.results[index].name.first)} ${capitalize(
           data.results[index].name.last
         )}`,
         gender: data.results[index].gender,
         age: calcMax([Math.floor(Math.random() * 80), 18]),
-        minAge: minMaxAge()['min'],
-        maxAge: minMaxAge()['max'],
+        minAge: minMaxAge().min,
+        maxAge: minMaxAge().max,
         username: data.results[index].login.username,
         password: data.results[index].login.password,
         email: data.results[index].email,
@@ -97,13 +98,12 @@ function getUsers(apiQuestions) {
       });
     }
 
-    MongoClient.connect('mongodb://localhost:27017/', function(err, db) {
+    MongoClient.connect('mongodb://localhost:27017/', function (err, db) {
       if (err) throw err;
 
-      db
-        .db('endless')
+      db.db('endless')
         .collection('users')
-        .insertMany(users, function(err, res) {
+        .insertMany(users, function (err, res) {
           if (err) throw err;
           users = res.ops;
           questions.forEach((q, index) => {
@@ -125,27 +125,23 @@ function getUsers(apiQuestions) {
             });
           });
 
-          db
-            .db('endless')
+          db.db('endless')
             .collection('questions')
-            .insertMany(questionList, function(err, res) {
+            .insertMany(questionList, function (err, res) {
               if (err) throw err;
-              db
-                .db('endless')
+              db.db('endless')
                 .collection('questions')
                 .count()
-                .then(function(qLength) {
+                .then(function (qLength) {
                   fillUsers(qLength);
                 });
               function fillUsers(questionLength) {
-                db
-                  .db('endless')
+                db.db('endless')
                   .collection('users')
                   .createIndex({ location: '2dsphere' });
 
-                users.forEach(function(user) {
-                  db
-                    .db('endless')
+                users.forEach(function (user) {
+                  db.db('endless')
                     .collection('questions')
                     .find()
                     .forEach((question, index) => {
@@ -159,10 +155,9 @@ function getUsers(apiQuestions) {
                           ],
                       });
                       if (users.length * questionLength === answers.length) {
-                        db
-                          .db('endless')
+                        db.db('endless')
                           .collection('answers')
-                          .insertMany(answers, function(err, res) {
+                          .insertMany(answers, function (err, res) {
                             if (err) throw err;
                             done();
                           });

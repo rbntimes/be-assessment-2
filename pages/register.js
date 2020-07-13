@@ -15,7 +15,7 @@ const Form = styled.form`
   grid-gap: 1rem;
 `;
 
-const Login = () => (
+const Register = () => (
   <Formik
     initialValues={{ username: '', password: '' }}
     validate={(values) => {
@@ -47,7 +47,7 @@ const Login = () => (
       /* and other goodies */
     }) => (
       <Form onSubmit={handleSubmit}>
-        <H1>Login</H1>
+        <H1>Register</H1>
         <Label>
           Username:
           <Input
@@ -78,4 +78,4 @@ const Login = () => (
   </Formik>
 );
 
-export default Login;
+export default Register;

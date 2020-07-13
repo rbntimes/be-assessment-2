@@ -1,16 +1,17 @@
 import { MongoClient } from 'mongodb';
 
-const url = "mongodb://" + process.env.DB_HOST + ":" + process.env.DB_PORT;
-console.log(url)
+const url = 'mongodb://' + process.env.DB_HOST + ':' + process.env.DB_PORT;
+console.log(url);
 const client = new MongoClient(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
 export async function setUpDb(db) {
-  db
-    .collection('tokens')
-    .createIndex({ expireAt: -1 }, { expireAfterSeconds: 0 });
+  db.collection('tokens').createIndex(
+    { expireAt: -1 },
+    { expireAfterSeconds: 0 }
+  );
   db.collection('posts').createIndex({ createdAt: -1 });
   db.collection('users').createIndex({ username: 1 }, { unique: true });
 }

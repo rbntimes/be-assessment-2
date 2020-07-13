@@ -31,32 +31,31 @@ const Nav = styled.nav`
 
 const Layout = ({ user, children }) => (
   <Container>
-    {user ? (
-      <Nav>
+    <Nav>
+      {user ? (
+        <>
+          <Link href="/">
+            <A>Matches</A>
+          </Link>
+          <Link href="/question">
+            <A>Questions</A>
+          </Link>
+          <Link href={`/user/${user?._id}`}>
+            <A>Profile</A>
+          </Link>
+          <Link href={`/styleguide`}>
+            <A>Styleguide</A>
+          </Link>
+        </>
+      ) : (
         <Link href="/">
-          <A>Matches</A>
+          <A>Endless</A>
         </Link>
-        <Link href="/question">
-          <A>Questions</A>
-        </Link>
-        <Link href={`/user/${user?._id}`}>
-          <A>Profile</A>
-        </Link>
-        <Link href={`/styleguide`}>
-          <A>Styleguide</A>
-        </Link>
-      </Nav>
-    ) : null}
+      )}
+    </Nav>
 
     <Content>{children}</Content>
   </Container>
 );
-
-// <Link href={`/${key}`}>
-// <A>Your questions</A>
-// </Link>
-// <Link href={`/${key}`}>
-// <A>Profile</A>
-// </Link>
 
 export default Layout;

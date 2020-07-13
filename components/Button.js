@@ -23,7 +23,8 @@ const Button = styled.button`
 `;
 
 function ButtonRender(props) {
-  return <Button {...props}>{props.children}</Button>;
+  const { children } = props;
+  return <Button {...props}>{children}</Button>;
 }
 
 export default ButtonRender;

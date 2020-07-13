@@ -8,6 +8,9 @@ const handler = nextConnect();
 handler.use(middleware);
 
 handler.get(async (req, res) => {
+  if (!req.user) {
+    res.status(401).json({});
+  }
   const { _id, prefers, maxAge, minAge, location, maxRange } = req.user;
 
   const preferences = {
@@ -24,7 +27,7 @@ handler.get(async (req, res) => {
       },
     },
   };
-  console.log(preferences);
+
   const map = drawGoogleMaps(
     req.user.location.coordinates[0],
     req.user.location.coordinates[1],
